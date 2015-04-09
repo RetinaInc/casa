@@ -1,0 +1,12 @@
+name = Roomify Lingo
+description = Install-specific language for each Roomify distro.
+core = 7.x
+package = RoomifyCore
+version = 7.x-1.0
+project = roomify_lingo
+dependencies[] = commerce_cart
+dependencies[] = entity
+dependencies[] = rooms
+dependencies[] = rules
+features[features_api][] = api:2
+features[rules_config][] = roomify_lingo_alter_line_item_label

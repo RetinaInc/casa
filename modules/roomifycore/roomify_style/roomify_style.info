@@ -1,0 +1,8 @@
+name = Roomify Style
+description = Style settings for the Roomify distro.
+core = 7.x
+package = RoomifyCore
+version = 7.x-1.0
+project = roomify_style
+
+dependencies[] = rooms

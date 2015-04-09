@@ -1,0 +1,44 @@
+/* Fixes for missing styles from commerce */
+.view-commerce-user-orders .views-table,
+.view-commerce-line-item-table .views-table {
+  width: 100%;
+}
+.commerce-price-formatted-components {
+  width: 33%;
+  margin-left: auto;
+}
+.commerce-price-formatted-components .component-type-commerce-price-formatted-amount {
+  font-weight: bold;
+}
+
+.checkout-continue {
+  margin-right: 4px;
+}
+.button-operator {
+  margin-left: 4px;
+}
+.views-field-commerce-total {
+  text-align: right;
+}
+
+.line-item-summary {
+  width: 33%;
+  margin-left: auto;
+  background: #ccc;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+.line-item-summary .line-item-total {
+  display: table;
+  width: 100%;
+}
+.line-item-summary .line-item-total-label {
+  text-align: left;
+  display: table-cell;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.line-item-summary .line-item-total-raw {
+  text-align: right;
+  display: table-cell;
+}

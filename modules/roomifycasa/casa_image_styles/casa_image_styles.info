@@ -1,0 +1,12 @@
+name = Casa image styles
+description = Create casa custom image styles
+core = 7.x
+package = RoomifyCasa
+version = 7.x-1.0
+project = casa_image_styles
+dependencies[] = epsacrop
+dependencies[] = image
+features[features_api][] = api:2
+features[image][] = roomify_large
+features[image][] = roomify_zoom
+mtime = 1421055384

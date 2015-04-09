@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * Implements hook_install().
+ */
+function roomify_rich_text_install() {
+
+  // Remove the 'Advanced' CKEditor profile installed by CKEditor module.
+  if (module_exists('ckeditor')) {
+    $name = 'Advanced';
+    db_delete('ckeditor_settings')
+      ->condition('name', $name)
+      ->execute();
+    db_delete('ckeditor_input_format')
+      ->condition('name', $name)
+      ->execute();
+  }
+}

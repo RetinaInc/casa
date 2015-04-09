@@ -1,0 +1,200 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
+@import url(http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic);
+/**
+ * $ARROW
+ */
+html {
+  background: #e1e4f0;
+}
+
+.l-header,
+.l-content,
+.l-footer {
+  background: #fff;
+}
+
+img, media {
+  max-width: 100%;
+}
+
+/**
+ * $FONT-FACE
+ */
+/**
+ * $BASE-TYPOGRAPHY
+ */
+html {
+  font-family: "Trebuchet MS", Helvetica, Arial, sans-serif;
+  color: #222222;
+}
+html * html {
+  font-size: 81.25%;
+}
+html html {
+  font-size: 13px;
+  line-height: 2.23077em;
+}
+
+/**
+ * $LINKS
+ */
+a {
+  color: #2e50a7;
+}
+a:visited {
+  color: #2e50a7;
+}
+a:focus {
+  color: #466bc7;
+}
+a:hover {
+  color: #466bc7;
+}
+a:active {
+  color: #e1e4f0;
+}
+
+/**
+ * $HEADINGS
+ */
+h1, .alpha,
+h2, .beta,
+h3, .gamma,
+h4, .delta,
+h5, .epsilon,
+h6, .zeta {
+  margin-top: 0em;
+  padding-top: 0em;
+  padding-bottom: 0em;
+  margin-bottom: 0.44615em;
+  color: #464a4e;
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+  font-weight: 400;
+}
+h1 a,
+h1 a:visited, .alpha a,
+.alpha a:visited,
+h2 a,
+h2 a:visited, .beta a,
+.beta a:visited,
+h3 a,
+h3 a:visited, .gamma a,
+.gamma a:visited,
+h4 a,
+h4 a:visited, .delta a,
+.delta a:visited,
+h5 a,
+h5 a:visited, .epsilon a,
+.epsilon a:visited,
+h6 a,
+h6 a:visited, .zeta a,
+.zeta a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+h1 a:hover, .alpha a:hover,
+h2 a:hover, .beta a:hover,
+h3 a:hover, .gamma a:hover,
+h4 a:hover, .delta a:hover,
+h5 a:hover, .epsilon a:hover,
+h6 a:hover, .zeta a:hover {
+  color: #243771;
+}
+
+h1, .alpha {
+  font-size: 55px;
+  font-size: 4.23077rem;
+  font-weight: 400;
+}
+
+h2, .beta {
+  font-size: 34px;
+  font-size: 2.61538rem;
+  font-weight: 400;
+  color: #243771;
+}
+
+h3, .gamma {
+  font-size: 21px;
+  font-size: 1.61538rem;
+  font-weight: 400;
+}
+
+h4, .delta {
+  font-size: 18px;
+  font-size: 1.38462rem;
+  font-weight: 400;
+}
+
+h5, .epsilon {
+  font-size: 16px;
+  font-size: 1.23077rem;
+  font-weight: 400;
+}
+
+h6, .zeta {
+  font-size: 16px;
+  font-size: 1.23077rem;
+  color: #2e50a7;
+}
+
+/**
+ * $PARAGRAPHS
+ */
+p,
+blockquote {
+  margin: 0;
+  margin-top: 0em;
+  padding-top: 0em;
+  padding-bottom: 0em;
+  margin-bottom: 2.23077em;
+}
+
+p + img {
+  float: left;
+  margin-right: 1em;
+}
+
+/**
+ * $QUOTES
+ */
+blockquote {
+  margin-top: 0em;
+  padding-top: 2.23077em;
+  padding-bottom: 2.23077em;
+  margin-bottom: 2.23077em;
+  padding: 0 1.5em;
+  border-style: solid;
+  border-width: 0.07692em;
+  padding: 2.15385em;
+  border-left-style: solid;
+  border-left-width: 0.76923em;
+  padding-left: 1.46154em;
+  font-style: italic;
+  color: #243771;
+}
+blockquote p {
+  margin: 0;
+}
+
+q {
+  font-style: italic;
+}
+
+/**
+ * $MARKS
+ */
+mark,
+.marker {
+  padding: 0.1em 0.5em;
+  background: #466bc7;
+  color: #fff;
+  font-size: 12px;
+  font-size: 0.92308rem;
+  text-transform: capitalize;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
+}

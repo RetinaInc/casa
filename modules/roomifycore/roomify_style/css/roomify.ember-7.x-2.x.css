@@ -1,0 +1,9 @@
+/**
+ * @file
+ *   Roomify theming overrides when using Ember 7.x-2.x theme.
+ */
+
+/* The default gray border color can barely be seen against the ember bg */
+.fc-widget-content {
+  border-color: #fff;
+}

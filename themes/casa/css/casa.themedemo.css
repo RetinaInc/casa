@@ -1,0 +1,10 @@
+.pane-switchtheme-switch-form {
+  padding: 15px 0;
+  float: left; }
+  .pane-switchtheme-switch-form .pane-title {
+    display: inline;
+    font-size: 15px;
+    font-weight: normal;
+    color: white; }
+  .pane-switchtheme-switch-form .switchtheme-switch-form {
+    display: inline-block; }

@@ -1,0 +1,51 @@
+.rooms-unit-edit-form .group-amenities,
+.rooms-unit-edit-form .group-amenities > .fieldset-wrapper > .form-wrapper {
+  max-width: 100%;
+  width: 100%;
+}
+.rooms-unit-edit-form fieldset fieldset {
+  background: transparent;
+}
+
+.group-options .form-item,
+.group-amenities .form-item {
+  overflow: hidden;
+  float: none;
+  clear: both;
+}
+.group-options fieldset,
+.group-amenities fieldset {
+  float: none;
+}
+.group-options > .fieldset-wrapper > .form-wrapper,
+.group-amenities > .fieldset-wrapper > .form-wrapper {
+  padding: 1em;
+}
+.group-options > .fieldset-wrapper > .form-wrapper > .form-item:last-child,
+.group-amenities > .fieldset-wrapper > .form-wrapper > .form-item:last-child {
+  margin-bottom: 0;
+}
+.group-options > .fieldset-wrapper > .form-wrapper:nth-of-type(even),
+.group-amenities > .fieldset-wrapper > .form-wrapper:nth-of-type(even) {
+  background: #fafafa;
+}
+.group-amenities .form-type-checkboxes .form-type-checkbox {
+  width: 16em;
+  float: left;
+  clear: none;
+}
+
+.field-name-field-property-size .form-item {
+  float: left;
+}
+.field-name-field-property-size .form-item input {
+  width: auto;
+}
+.field-name-field-property-size .form-item label {
+  display: none;
+}
+.field-name-field-property-size .form-wrapper {
+  float: left;
+  margin-right: 20px;
+  padding: 0;
+}

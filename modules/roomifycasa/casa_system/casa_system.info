@@ -1,0 +1,10 @@
+name = Casa System
+description = Casa common overrides and fine tuning.
+core = 7.x
+
+package = RoomifyCasa
+
+dependencies[] = rooms_availability_constraints
+
+stylesheets[all][] = css/casa_system.css
+

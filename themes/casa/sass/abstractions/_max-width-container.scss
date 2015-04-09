@@ -1,0 +1,12 @@
+@import "susy";
+@import "variables/grid";
+
+// Create a susy grid container element with a custom
+// max width. If a custom max width is not provided,
+// the mixin defaults to use the $container-width
+// variable set in your Susy grid definitions.
+@mixin max-width-container($width: $container-width) {
+  @include container;
+  max-width: $width;
+  _width: $width;
+}

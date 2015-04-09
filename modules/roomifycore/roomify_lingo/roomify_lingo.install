@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * Implements hook_uninstall().
+ */
+function roomify_lingo_unistall() {
+
+  // Remove custom string overrides and clear cache.
+  variable_del('locale_custom_strings_en');
+  drupal_flush_all_caches();
+}
+/**
+ * Implements hook_install().
+ */
+function roomify_lingo_install() {
+  // Provide a different default checkout complete message for Roomify.
+  variable_set('commerce_checkout_completion_message',roomify_checkout_completion_message_default());
+
+  // Set custom strings stored as variables.
+  list($unit, $Unit, $units, $Units, $type, $Type, $types, $Types) = roomify_lingo_variables();
+  variable_set_value('rooms_booking_manager_unit_available_from', 'property available for');
+  variable_set_value('rooms_booking_manager_units', $Units);
+  variable_set_value('rooms_booking_manager_warning_no_units_available', "@property_name is not available from @start_date to @end_date, please try different dates if possible.");
+  variable_set_value('rooms_booking_manager_error_select_unit', "Please select a $unit in order to continue with booking.");
+}
+
+/**
+ * Overrides defaults from commerce_checkout_completion_message_default().
+ */
+function roomify_checkout_completion_message_default() {
+  // If the Filtered HTML text format is available, use a default value with
+  // links in it.
+  if (filter_format_load('filtered_html')) {
+    $value = 'Your reservation number is #[commerce-order:order-number]. You may <a href="[commerce-order:url]">view your reservation</a> on your account page when logged in.'
+      . "\n\n" . '<a href="[site:url]">Return to the front page.</a>';
+    $format = 'filtered_html';
+  }
+  else {
+    // Otherwise select a fallback format and use a plaint text default value.
+    $value = 'Your reservation number is #[commerce-order:order-number]. You may view your order on your account page when logged in.';
+    $format = filter_fallback_format();
+  }
+  return array('value' => $value, 'format' => $format);
+}

@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Casa unit type feature.
+ */
+
+include_once 'casa_unit_type.features.inc';

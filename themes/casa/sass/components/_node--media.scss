@@ -1,0 +1,15 @@
+/**
+ * Media layout for nodes with images.
+ */
+.node {
+  overflow: hidden;
+}
+
+.node__media {
+  float: left;
+  margin-right: 1.2em;
+  max-width: 37%;
+  + header .node__title {
+    margin-top: 0;
+  }
+}

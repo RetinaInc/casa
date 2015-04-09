@@ -1,0 +1,258 @@
+#logo {
+  background: url(roomifycasa.png) no-repeat 0 0;
+  width: 180px; /* Equal to width of new image */
+  height: 92px; /* Equal to height of new image */
+  /* The following lines will push the original logo image out of view. */
+  display: block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding-left: 180px; /* Equal to width of new image */
+}
+
+/* Show the price and currency fields next to each other */
+#edit-price-title {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.form-item-price,
+.form-item-commerce-default-currency {
+  display: inline-block;
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+.form-item-price {
+  margin-right: 1em;
+}
+
+.form-item-theme-default {
+  margin: 20px 0 !important;
+  padding-bottom: 20px !important;
+  border-bottom: 1px solid #d7dde0 !important;
+}
+.form-item-theme-default:last-child {
+  border-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+.form-item-theme-default .form-radio {
+  display: none;
+}
+.form-item-theme-default .screenshot {
+  float: left;
+  margin-right: 20px;
+  border: 1px solid #d7dde0;
+  background: #fff;
+  padding: 2px;
+  vertical-align: bottom;
+}
+.form-item-theme-default label.option {
+  border: 3px solid white;
+  display: block;
+  overflow: hidden;
+  padding: 10px;
+}
+.form-item-theme-default label.option:hover {
+  border: 3px solid #cee4ee;
+  background: #eff7fc;
+  cursor: pointer;
+}
+.form-item-theme-default .form-radio:checked + label {
+  border: 3px solid #9ec6e3;
+  background: #cce4f5;
+}
+
+/* Override Seven theme styles to match RoomifyCasa. */
+#branding {
+  background-color: #edf7fc;
+}
+a {
+  color: #1D9BD8;
+}
+ol.task-list li.done {
+  color: #33B350;
+}
+input, select {
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  font-size: 130%;
+}
+input.form-submit,
+a.button {
+  color: rgb(34, 33, 33);
+  border: 1px solid #c5d4db;
+  border-bottom-color: #c5d4db;
+  border-left-color: #c5d4db;
+  border-right-color: #c5d4db;
+  background: #edf5f9;
+  background: -moz-linear-gradient(top, #edf5f9 0%, #d7e9f2 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#edf5f9), color-stop(100%,#d7e9f2));
+  background: -webkit-linear-gradient(top, #edf5f9 0%,#d7e9f2 100%);
+  background: -o-linear-gradient(top, #edf5f9 0%,#d7e9f2 100%);
+  background: -ms-linear-gradient(top, #edf5f9 0%,#d7e9f2 100%);
+  background: linear-gradient(to bottom, #edf5f9 0%,#d7e9f2 100%);
+  padding: 10px 17px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px #ddd;
+}
+input.form-submit:hover,
+a.button:hover {
+  background: #f2f9fc;
+  background: -moz-linear-gradient(top, #f2f9fc 0%, #dceef7 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f2f9fc), color-stop(100%,#dceef7));
+  background: -webkit-linear-gradient(top, #f2f9fc 0%,#dceef7 100%);
+  background: -o-linear-gradient(top, #f2f9fc 0%,#dceef7 100%);
+  background: -ms-linear-gradient(top, #f2f9fc 0%,#dceef7 100%);
+  background: linear-gradient(to bottom, #f2f9fc 0%,#dceef7 100%);
+}
+input.form-submit:active {
+  color: #2B5164;
+  text-shadow: none;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+  border: 1px solid #c5d4db;
+  border-bottom-color: #c5d4db;
+  border-left-color: #c5d4db;
+  border-right-color: #c5d4db;
+}
+.progress .filled {
+  height: 1.8em;
+  -webkit-transition: width 300ms ease-in-out;
+     -moz-transition: width 300ms ease-in-out;
+      -ms-transition: width 300ms ease-in-out;
+       -o-transition: width 300ms ease-in-out;
+          transition: width 300ms ease-in-out;
+}
+.progress .bar {
+  border: 1px solid #d7dde0;
+  box-shadow: inset 0 1px 7px rgba(0, 0, 0, 0.2);
+}
+
+ul.tips, div.description, .form-item div.description {
+  color: #888;
+}
+
+div.messages {
+  border-color: #d7dde0;
+  background-image: none;
+  padding: 10px 16px;
+  box-shadow: 0 1px 2px -1px #ddd;
+}
+div.messages.completed {
+  display: none; /* Hide migrate module status messages */
+}
+div.status {
+  color: #29D60B;
+}
+div.status,
+.ok {
+  color: #2AA214;
+}
+div.status,
+table tr.ok {
+  background-color: #E1FFDB;
+}
+div.error,
+table tr.error {
+  background-color: #FEF1F4;
+}
+div.error, table tr.error {
+  background-color: #FEF1F4;
+}
+div.error {
+  border-color: #F39B9B;
+}
+fieldset {
+  border: 1px solid #ddd;
+  box-shadow: 0 1px 2px -1px #ddd;
+}
+.form-item {
+  padding: 0;
+  margin: 10px 0;
+}
+.form-item input.error,
+.form-item textarea.error,
+.form-item select.error {
+  border: 2px solid #F37E7E;
+}
+.marker, .form-required {
+  color: #F37E7E;
+}
+.form-required {
+  font-size: 150%;
+  line-height: .6em;
+  vertical-align: bottom;
+}
+.confirm-parent,
+.password-parent {
+  width: 100%;
+}
+input.password-confirm,
+input.password-field {
+  width: 50%;
+}
+div.password-confirm,
+.password-strength {
+  width: 45%;
+}
+.password-strength {
+  position: relative;
+}
+.password-strength-text {
+  position: absolute;
+  right: 10px;
+  line-height: 2.1;
+}
+.password-strength-title {
+  position: absolute;
+  left: 5px;
+  line-height: 2.1;
+}
+.password-indicator {
+  height: 2.1em;
+  background-color: #fefefe;
+  box-shadow: inset 0 1px 7px rgba(0, 0, 0, 0.2);
+}
+.password-indicator,
+.password-indicator div {
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+}
+.password-indicator div {
+  background-color: #70E48B;
+}
+.password-confirm span {
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  padding: 2px 3px;
+}
+.password-confirm .error {
+  background-color: #F58282;
+}
+
+.password-confirm .ok {
+  color: #234600;
+  background: #70E48B;
+}
+
+.password-confirm .ok:before {
+  content: "\2713 ";
+}
+
+div.vertical-tabs {
+  background-position: -80px 0;
+  box-shadow: 0 1px 2px -1px #ddd;
+}
+div.vertical-tabs .vertical-tabs-list {
+  width: 160px;
+}
+div.vertical-tabs .vertical-tabs-panes {
+  margin: 0 0 0 175px;
+}
+fieldset.vertical-tabs-pane {
+  box-shadow: none;
+}

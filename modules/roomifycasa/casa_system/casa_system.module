@@ -1,0 +1,551 @@
+<?php
+
+/**
+ * @file
+ * Hooks and API functions for casa_system module.
+ */
+
+/**
+ * Implements hook_form_ID_alter().
+ */
+function casa_system_form_bean_form_alter(&$form, &$form_state, $form_id) {
+
+  // Simplify the log message field.
+  if (isset($form['revision'])) {
+    $form['revision']['log']['#type'] = 'textfield';
+    $form['revision']['log']['#size'] = 100;
+    $form['revision']['log']['#title'] = t('What did you change?');
+  }
+
+  // Space is cheap; default to new revision and require a log message.
+  $bean_types_that_require_revisions = array(
+    'footer',
+  );
+  if (in_array($form['#bundle'], $bean_types_that_require_revisions)) {
+    if (isset($form['revision'])) {
+      // Default to new revision.
+      $form['revision']['is_new_revision']['#default_value'] = true;
+      $form['revision']['is_new_revision']['#type'] = 'hidden';
+
+      // This dependency is not needed when the is_new_revision field is hidden.
+      unset($form['revision']['log']['#dependency']);
+
+      // Always make the current edit the live version.
+      $form['revision']['default_revision']['#default_value'] = true;
+      $form['revision']['default_revision']['#type'] = 'hidden';
+
+      // Require a log message.
+      $form['revision']['log']['#required'] = TRUE;
+    }
+  }
+
+  // Hide the view mode selector if there is only one to choose from.
+  // This really should be built into the Bean module itself. ;)
+  if(count($form['view_mode']['#options']) == 1) {
+    $form['view_mode']['#type'] = 'hidden';
+  }
+
+  // In fact, most beans don't use "View modes" at all so remove it
+  // entirely from the edit form for the following bean types.
+  $bean_types_that_dont_need_view_modes = array(
+    'footer',
+  );
+  if (in_array($form['#bundle'], $bean_types_that_dont_need_view_modes)) {
+    if (isset($form['view_mode'])) {
+      $form['view_mode']['#type'] = 'hidden';
+    }
+  }
+}
+
+
+/**
+ * Implements hook_form_FORM_ID_alter() for rooms_modal_booking_form().
+ */
+function casa_system_form_rooms_modal_booking_form_alter(&$form, &$form_state) {
+  $unit_ids = $form['unit_booking']['unit_id']['#value'];
+  $units = rooms_unit_load_multiple($unit_ids);
+
+  list($start_date, $end_date) = casa_system_get_three_months_range($form_state['year'], $form_state['month']);
+
+  $message = casa_system_get_availability_constraints_message($units, $start_date, $end_date);
+
+  if (!empty($message)) {
+    $form['message']['#markup'] = theme('item_list', array('items' => $message));
+  }
+}
+
+/**
+ * Implements hook_preprocess_rooms_booking_results().
+ */
+function casa_system_preprocess_rooms_booking_results(&$vars) {
+  if (isset($vars['no_results'])) {
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'rooms_unit');
+    $result = $query->execute();
+    if (!empty($result['rooms_unit'])) {
+      $units = rooms_unit_load_multiple(array_keys($result['rooms_unit']));
+
+      $start_date = start_date_load(arg(1));
+      $end_date = end_date_load(arg(2));
+
+      $message = casa_system_get_availability_constraints_message($units, $start_date, $end_date);
+
+      $no_result = casa_system_override_no_result_message($units);
+
+      if (!empty($message)) {
+        $aux = array();
+        $aux[]['#markup'] = $no_result['#markup'];
+        $aux[]['#markup'] = theme('item_list', array('items' => $message));
+        $no_result[] = $aux;
+        unset($no_result['#markup']);
+      }
+
+      $vars['no_results'] = $no_result;
+    }
+  }
+}
+
+/**
+ * Overrides the default availability search form error message.
+ *
+ * @param array $units
+ *   List of available units in the site.
+ *
+ * @return array
+ *   Renderable array of the new message
+ */
+function casa_system_override_no_result_message($units) {
+  // Store and clean old messages.
+  $old_messages = drupal_get_messages();
+
+  $first_unit = current($units);
+  $start_date = start_date_load(arg(1));
+  $end_date = start_date_load(arg(2));
+  // Create a warning message.
+  $args = array(
+    '@property_name' => $first_unit->name,
+    '@start_date' => $start_date->format(variable_get('rooms_date_format', 'd-m-Y')),
+    '@end_date' => $end_date->format(variable_get('rooms_date_format', 'd-m-Y')),
+  );
+  drupal_set_message(format_string(variable_get_value('rooms_booking_manager_warning_no_units_available'), $args), 'warning');
+
+  // Show the themed warning message inside our form.
+  $no_result = array(
+    '#prefix' => '<div class="no-booking-data">',
+    '#markup' => theme('status_messages'),
+    '#suffix' => '</div>',
+  );
+
+  // Restore old messages.
+  $_SESSION['messages'] = $old_messages;
+  return $no_result;
+}
+
+/**
+ * Generates the availability constraints formatted message.
+ *
+ * @param $units
+ *   Units to take into account.
+ * @param $start_date
+ *   Start date to look for constraints.
+ * @param $end_date
+ *   End date to look for constraints.
+ *
+ * @return array
+ *   Nested array containing the formatted message.
+ */
+function casa_system_get_availability_constraints_message($units, $start_date, $end_date) {
+  $message = array();
+  $types = array();
+  $types_text = array();
+
+  foreach ($units as $unit) {
+    if (!isset($types[$unit->type])) {
+      $types[] = rooms_unit_type_load($unit->type);
+    }
+  }
+
+  foreach ($types as $type) {
+    if ($constraints = field_get_items('rooms_unit_type', $type, 'rooms_constraints_range')) {
+      $types_text[$type->type] = casa_system_get_availability_constraints_by_date($constraints, $start_date, $end_date);
+    }
+  }
+
+  foreach ($units as $unit) {
+    if ($constraints = field_get_items('rooms_unit', $unit, 'rooms_constraints_range')) {
+      $constraints_text = casa_system_get_availability_constraints_by_date($constraints, $start_date, $end_date);
+      if (!empty($constraints_text)) {
+        if (isset($types_text[$unit->type])) {
+          array_push($constraints_text, $types_text[$unit->type]);
+        }
+        $message[$unit->unit_id]['data'] = t('@unit_name:', array('@unit_name' => $unit->name));
+        $message[$unit->unit_id]['children'] = $constraints_text;
+      }
+    }
+  }
+
+  // Don't show the unit name when there is only one unit to show.
+  if (count($units) == 1 && !empty($message)) {
+    $message = $message[$unit->unit_id]['children'];
+  }
+  return $message;
+}
+
+/**
+ * Returns a three months range given a year and month.
+ *
+ * @param int $year
+ *   Year of the starting date.
+ * @param int $month
+ *   Month of the starting date.
+ *
+ * @return array
+ *   Array containing start and end date.
+ */
+function casa_system_get_three_months_range($year = NULL, $month = NULL) {
+  if (!$year || !$month) {
+    $start_date = new DateTime();
+    $start_date->modify('first day of this month');
+  }
+  else {
+    $start_date = new DateTime("$year-$month-1");
+  }
+
+  $end_date = clone $start_date;
+  $end_date->modify('last day of third month');
+
+  return array($start_date, $end_date);
+}
+
+/**
+ * Returns a summary of constraints for certain period.
+ *
+ * @param array $constraints
+ *   Constraints to process.
+ * @param DateTime $start_date
+ *   The starting date.
+ * @param DateTime $end_date
+ *   The end date.
+ *
+ * @return array
+ *   Processed array of string containing the constraints.
+ */
+function casa_system_get_availability_constraints_by_date($constraints, $start_date, $end_date) {
+  $constraint_definition = array();
+
+  foreach ($constraints as $constraint) {
+    if ($start_date->format('Y-m-d') < $constraint['end_date'] && $end_date->format('Y-m-d') > $constraint['start_date']) {
+      $constraint_definition[] = casa_system_availability_constraint_text($constraint);
+    }
+  }
+
+  return $constraint_definition;
+}
+
+/**
+ * Generates a text describing an availability_constraint.
+ *
+ * @param array $constraint
+ *   The constraint definition array.
+ *
+ * @return string
+ *   The formatted message.
+ */
+function casa_system_availability_constraint_text($constraint) {
+
+  // First setup a few variables to simplify logic below.
+
+  // Min/max stay length constraint variables.
+  $minimum_stay = empty($constraint['minimum_stay']) ? '' : format_plural($constraint['minimum_stay'], '@count day', '@count days', array('@count' => $constraint['minimum_stay']));
+  $maximum_stay = empty($constraint['maximum_stay']) ? '' : format_plural($constraint['maximum_stay'], '@count day', '@count days', array('@count' => $constraint['maximum_stay']));
+
+  // Day of the week constraint variable.
+  $day_of_the_week = ($constraint['constraint_type'] == ROOMS_AVAILABILITY_CONSTRAINTS_NO_DAY) ? '' :rooms_availability_constraints_get_weekday($constraint['start_day']);
+
+  // Date range constraint variables.
+  // @todo: format date string.
+  $start_date = !empty($constraint['always']) ? '' : $constraint['start_date'];
+  $end_date = !empty($constraint['always']) ? '' : $constraint['end_date'];
+
+  // Next create replacement placeholders to be used in t() below.
+  $args = array(
+    '@minimum_stay' => $minimum_stay,
+    '@maximum_stay' => $maximum_stay,
+    '@start_date' => $start_date,
+    '@end_date' => $end_date,
+    '@day_of_the_week' => $day_of_the_week,
+  );
+
+  // Finally, build out the constraint text string adding components
+  // as necessary.
+
+  // Specify a date range constraint.
+  if ($start_date && $end_date) {
+    $text = t('From @start_date to @end_date', $args);
+  }
+
+  // Specify the day of the week constraint.
+  if ($day_of_the_week) {
+    if ($constraint['constraint_type'] == ROOMS_AVAILABILITY_CONSTRAINTS_IF_STARTS) {
+      if ($start_date && $end_date) {
+        $text = t('From @start_date to @end_date, if booking starts on @day_of_the_week', $args);
+      }
+      else {
+        $text = t('If booking starts on @day_of_the_week', $args);
+      }
+    }
+    elseif ($start_date && $end_date) {
+      $text = t('From @start_date to @end_date, bookings must start on @day_of_the_week', $args);
+
+      // Combine day of the week restraint with min/max stay length.
+      if ($minimum_stay || $maximum_stay) {
+        $text .= ' ' . t('and');
+      }
+    }
+    else {
+      $text = t('Bookings must start on @day_of_the_week', $args);
+    }
+  }
+
+  // Specify the min/max stay length constraint.
+  if ($minimum_stay || $maximum_stay) {
+    if (empty($text)) {
+      $text = t('The stay') . ' ';
+    }
+    else {
+      $text .=   ' ' . t('the stay') . ' ';
+    }
+  }
+  if ($minimum_stay && $maximum_stay) {
+    // Special case when min stay and max stay are the same.
+    if ($minimum_stay == $maximum_stay) {
+      $text .= t('must be for @minimum_stay', $args);
+    }
+    else {
+      $text .= t('must be at least @minimum_stay and at most @maximum_stay', $args);
+    }
+  }
+  elseif ($minimum_stay) {
+    $text .= t('must be for at least @minimum_stay', $args);
+  }
+  elseif ($maximum_stay) {
+    $text .= t('cannot be more than @maximum_stay', $args);
+  }
+
+  // Add a period to the end of the sentence.
+  return t('@constraint_text.', array('@constraint_text' => $text));
+}
+
+/**
+ * Helper function creates or updates menu links. This is mainly used in the
+ * hook_enable() functions of the various Roomify feature modules during site
+ * installation.
+ */
+function casa_system_create_update_menu_link($title, $path, $menu = 'main-menu', $weight = 0, $enabled = 1, array $options = array()) {
+  // If there is a preexisting menu item, load it, and update that.
+  $existing_item = db_select('menu_links', 'ml')->condition('link_path', $path)->condition('menu_name', $menu)->fields('ml')->range(0, 1)->execute()->fetchAssoc();
+
+  // Otherwise prepare a new menu item.
+  $item = empty($existing_item) ? array() : $existing_item;
+
+  $item['link_title'] = $title;
+  $item['link_path'] = $path;
+  $item['menu_name'] = $menu;
+  $item['weight'] = $weight;
+  $item['enabled'] = $enabled;
+  $item['options'] = $options;
+  menu_link_save($item, $existing_item);
+
+  menu_rebuild();
+}
+
+/**
+ * Implements hook_form_ID_alter() for SEO_checklist.
+ */
+function casa_system_form_checklistapi_checklist_form_alter(&$form, &$form_state, $form_id) {
+  $form['checklistapi']['tools']['#access'] = FALSE;
+  $form['checklistapi']['page_titles_meta_tags']['install_metatags_quick']['#access'] = FALSE;
+  $form['checklistapi']['page_titles_meta_tags']['configure_metatags_quick']['#access'] = FALSE;
+  $form['checklistapi']['submit_to_search_engines']['add_to_google_places']['#access'] = FALSE;
+  $form['checklistapi']['track_visitors']['install_context_keywords']['#access'] = FALSE;
+  $form['checklistapi']['other_checklists']['#access'] = FALSE;
+  $form['checklistapi']['paid_services']['#access'] = FALSE;
+  $form['checklistapi']['extras']['#access'] = FALSE;
+}
+
+/**
+ * Implements hook_menu_alter().
+ */
+function casa_system_menu_alter(&$items) {
+  $items['admin/rooms/units/bulk_unit_management']['access callback'] = FALSE;
+  $items['admin/rooms/units/bulk_pricing_management']['access callback'] = FALSE;
+  $items['admin/rooms/units']['access callback'] = FALSE;
+  $items['admin/rooms/units/unit-types']['access callback'] = FALSE;
+  $items['admin/rooms/units/unit-types/import']['access callback'] = FALSE;
+  $items['admin/rooms/units/unit-types/add']['access callback'] = FALSE;
+  $items['admin/rooms/units/unit-types/manage/casa_type']['access callback'] = FALSE;
+}
+
+/**
+ * Implements hook_views_default_views_alter()
+ */
+function casa_system_views_default_views_alter(&$views) {
+  $handler =& $views['bookable_units']->display['page_1']->handler;
+  $handler->view->disabled = TRUE;
+}
+  
+/**
+ * Implements hook_menu()
+ */
+function casa_system_menu(){
+  //Load first unit in db
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'rooms_unit');
+  $results = $query->execute();
+  $unit_id = array_shift($results['rooms_unit'])->unit_id;
+  
+  $unit = rooms_unit_load($unit_id);
+  $items['admin/rooms/casa-edit'] = array(
+    'title' => t('Property'),
+    'description' => t("Edit and configure your Roomify property's availability, pricing, and amenities."),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('casa_system_edit_unit_form'),
+    'access arguments' => array('configure room settings'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' =>'rooms_unit.admin.inc',
+    'file path' => drupal_get_path('module', 'rooms_unit'),
+    'weight' => -1,
+  );
+  $items['admin/rooms/casa-edit/availability'] = array(
+    'title' => t('Manage Availability'),
+    'page callback' => 'rooms_availability_page',
+    'page arguments' => array($unit, 4, 5),
+    'access callback' => 'rooms_unit_access',
+    'access arguments' => array(1),
+    'type' => MENU_LOCAL_TASK,
+    'context' => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
+    'file' => 'rooms_availability.module',
+    'file path' => drupal_get_path('module', 'rooms_availability'),
+    'weight' => '20',
+  );
+  $items['admin/rooms/casa-edit/pricing'] = array(
+    'title' => t('Manage Pricing'),
+    'page callback' => 'rooms_pricing_page',
+    'page arguments' => array($unit, 4, 5),
+    'access callback' => 'rooms_unit_access',
+    'access arguments' => array('update pricing', $unit),
+    'type' => MENU_LOCAL_TASK,
+    'context' => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
+    'file' => 'rooms_pricing.module',
+    'file path' => drupal_get_path('module', 'rooms_pricing'),
+    'weight' => '30',
+  );
+  
+  return $items;
+}
+
+function casa_system_edit_unit_form($form, &$form_state) {
+  //Load first unit in db
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'rooms_unit');
+  $results = $query->execute();
+  $unit_id = array_shift($results['rooms_unit'])->unit_id;
+  
+  $unit = rooms_unit_load($unit_id);
+  $form = rooms_unit_edit_form($form, $form_state, $unit);
+  unset($form['actions']['delete']);
+  
+  $form['actions']['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save Unit'),
+    '#submit' =>array('casa_system_edit_unit_form_submit'),
+  );
+
+  return $form;  
+}
+
+function casa_system_edit_unit_form_submit($form, &$form_state) {
+  rooms_unit_edit_form_submit($form, $form_state);
+  $form_state['redirect'] = 'admin/rooms';
+}
+
+/**
+ * Implements hook_form_ID_alter() to change "Edit Bookings" options.
+ */
+function casa_system_form_rooms_booking_edit_form_alter(&$form, &$form_state, $form_id) {
+  if ($form['get_availability']['#value'] == 'Re-assign Property' || $form['get_availability']['#value'] == 'Check Availability') {
+
+    $form['get_availability']['#value'] = 'Check Availability';
+
+    $form['availability_fieldset']['unit_type']['#access'] = FALSE;
+    $form['availability_fieldset']['unit_fieldset']['type']['unit_id'] = FALSE;
+    
+    if (isset($form['availability_fieldset']['unit_fieldset']['instructions']['#markup']) && $form['availability_fieldset']['unit_fieldset']['instructions']['#markup'] != 'No casa_type property are available for specified party size on the chosen dates.') {
+
+      $form['availability_fieldset']['unit_fieldset']['instructions']['#access'] = FALSE;
+    }
+    else {
+      $form['availability_fieldset']['unit_fieldset']['instructions']['#markup'] = t('Property is not available for specified party size on the chosen dates.');
+    }
+
+    $form['#validate'][1] = 'validate_edit_booking_form';
+    $form['#validate'][2] = 'rooms_booking_edit_form_validate';
+  }
+}
+
+// Adding the first unit_id in the database in form_state
+function validate_edit_booking_form(&$form, &$form_state) {
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'rooms_unit');
+  $results = $query->execute();
+  $unit_id = array_shift($results['rooms_unit'])->unit_id;
+  
+  $form_state['values']['unit_id'] = $unit_id;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * FORM_ID = rooms_booking_settings
+ * Show/Hide elements for different roles.
+ */
+function casa_system_form_rooms_booking_settings_alter(&$form, &$form_state, $form_id) {
+  $is_manager = FALSE;
+  $user_roles = $GLOBALS['user']->roles;
+  // Check if the current user is a Room Manager.
+  foreach ($user_roles as $role) {
+    if ($role == 'rooms manager') {
+      $is_manager = TRUE;
+    }
+  }
+  if ($is_manager) {
+    $form['rooms_booking_settings']['rooms_booking_type']['#access'] = FALSE;
+    $form['rooms_admin_settings']['rooms_date_format']['#access'] = FALSE;
+    $form['rooms_checkout_settings']['rooms_checkout_style']['#access'] = FALSE;
+    $form['rooms_checkout_settings']['enquiry_section']['#access'] = FALSE;
+    $form['rooms_checkout_settings']['rooms_price_calculation']['#access'] = FALSE;
+    $form['rooms_search_settings']['#access'] = FALSE;
+  }
+  $form['rooms_search_settings']['rooms_presentation_style']['#access'] = FALSE;
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * Change 'Any' string in Activities exposed form.
+ */
+function casa_system_form_alter(&$form, &$form_state) {
+  if ($form['#id'] == 'views-exposed-form-activity-default') {
+    $form['activity']['#options']['All'] = t(' - All Activities - ');
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * FORM_ID = rooms_booking_manager_change_search_form
+ * Hide number of units selected from the availability search.
+ */
+function casa_system_form_rooms_booking_manager_change_search_form_alter(&$form, &$form_state, $form_id) {
+  $form['info']['units']['#access'] = FALSE;
+}

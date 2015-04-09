@@ -1,0 +1,27 @@
+<?php
+/**
+ * @file
+ * Code for the Casa Homepage content type feature.
+ */
+
+include_once 'casa_homepage_content_type.features.inc';
+
+/**
+ * Implements hook_form_FORM_ID_alter for homepage_node_form.
+ */
+function casa_homepage_content_type_form_homepage_node_form_alter(&$form, &$form_state, $form_id) {
+  $form['revision_information']['#access'] = FALSE;
+  // Add a redirect to the homepage node edit adding further info content.
+  if (!empty($form['nid']['#value'])) {
+	  $form['field_homepage_choose_further']['und']['#description'] = t('You can use this section to provide additional information about your "Casa" or the area.<br />
+	You can create more info content by visiting <a target="_blank" href="/node/add/further-info?destination=node/' . $form['nid']['#value'] . '/edit">/node/add/further-info</a>.<br />
+	If you wish to use a tripadvisor widget in this space, add one here <a target="_blank" href="/node/add/widget">/node/add/widget</a>.');
+	}
+	// On save of the slideshow take user back to the homepage to see changes.
+	$selected_slideshow = $form['#node']->field_homepage_choose_slideshow['und'][0]['target_id'];
+	$form['field_homepage_choose_slideshow']['und']['#description'] = '
+	<input name="op" type="button" value="Edit" size="4" class="form-submit" onclick= location.href="/node/' . $selected_slideshow . '/edit?destination=">
+	<br><br>
+	This is the slideshow that will display on your site\'s front page.
+You can create slideshows by visiting <a target="_blank" href="/node/add/slideshow?destination=node/' . $form['nid']['#value'] . '/edit">/node/add/slideshow</a>.';
+}

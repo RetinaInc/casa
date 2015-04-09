@@ -1,0 +1,8 @@
+name = Casa Overrides
+description = Customize and override contrib modules default configurations for Roomify Casa.
+core = 7.x
+version = 1.x-dev
+
+package = RoomifyCasa
+
+dependencies[] = rooms

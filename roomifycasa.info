@@ -1,0 +1,104 @@
+name = RoomifyCasa
+distribution_name = RoomifyCasa
+description = Manage bookings for your rental property on your own website using the power of Drupal Rooms.
+version = alpha
+core = 7.x
+
+; The exclusive flag auto-selects this profile during installation, as long as
+; there are no other exclusive ones.
+exclusive = TRUE
+
+; Core modules
+dependencies[] = contact
+dependencies[] = contextual
+dependencies[] = dblog
+dependencies[] = field
+dependencies[] = field_ui
+dependencies[] = file
+dependencies[] = help
+dependencies[] = image
+dependencies[] = list
+dependencies[] = locale
+dependencies[] = menu
+dependencies[] = number
+dependencies[] = options
+dependencies[] = path
+dependencies[] = rdf
+dependencies[] = search
+dependencies[] = taxonomy
+dependencies[] = translation
+
+; Rooms modules
+
+dependencies[] = rooms
+dependencies[] = rooms_availability
+dependencies[] = rooms_availability_constraints
+dependencies[] = rooms_availability_reference
+dependencies[] = rooms_booking
+dependencies[] = rooms_booking_manager
+dependencies[] = rooms_package
+dependencies[] = rooms_pricing
+dependencies[] = rooms_ui
+dependencies[] = rooms_unit
+
+; Contrib modules
+
+dependencies[] = addressfield
+dependencies[] = bean
+dependencies[] = bean_admin_ui
+dependencies[] = breakpoints
+dependencies[] = checklistapi
+dependencies[] = ckeditor
+dependencies[] = coder
+dependencies[] = coder_review
+dependencies[] = commerce
+dependencies[] = commerce_cart_expiration
+dependencies[] = commerce_payment
+dependencies[] = contact_google_analytics
+dependencies[] = ctools
+dependencies[] = date
+dependencies[] = date_popup
+dependencies[] = date_api
+dependencies[] = entity
+dependencies[] = entityreference
+dependencies[] = entity_translation
+dependencies[] = epsacrop
+dependencies[] = features
+dependencies[] = field_collection
+dependencies[] = field_group
+dependencies[] = ga_tokenizer
+dependencies[] = galleria
+dependencies[] = geofield
+dependencies[] = geophp
+dependencies[] = getdirections
+dependencies[] = globalredirect
+dependencies[] = googleanalytics
+dependencies[] = htmlpurifier
+dependencies[] = jquery_update
+dependencies[] = leaflet
+dependencies[] = leaflet_more_maps
+dependencies[] = leaflet_views
+dependencies[] = libraries
+dependencies[] = metatag
+dependencies[] = microdata
+dependencies[] = migrate
+dependencies[] = module_filter
+dependencies[] = navbar
+dependencies[] = panels
+dependencies[] = panels_everywhere
+dependencies[] = page_manager
+dependencies[] = pathauto
+dependencies[] = redirect
+dependencies[] = rules
+dependencies[] = search404
+dependencies[] = seo_checklist
+dependencies[] = seo_checker
+dependencies[] = site_verify
+dependencies[] = site_map
+dependencies[] = strongarm
+dependencies[] = title
+dependencies[] = views
+dependencies[] = views_slideshow
+dependencies[] = views_slideshow_galleria
+dependencies[] = views_ui
+dependencies[] = xmlsitemap

@@ -1,0 +1,14 @@
+/**
+ * Widget
+ */
+.node--widget--teaser {
+	.node__title {
+		display: none;
+	}
+}
+.node--widget--teaser {
+	text-align: center;
+	.node__content {
+		display: inline-block;
+	}
+}

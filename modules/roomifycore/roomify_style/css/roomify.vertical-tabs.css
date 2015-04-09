@@ -1,0 +1,10 @@
+
+/* Fix for crappy vertical tabs CSS */
+.vertical-tabs-pane .fieldset-wrapper .fieldset-wrapper > div:first-child {
+  padding-top: 0;
+}
+
+.vertical-tabs,
+.field-group-tab-wrapper {
+  clear: both;
+}

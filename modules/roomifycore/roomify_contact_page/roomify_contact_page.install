@@ -1,0 +1,27 @@
+<?php
+
+/**
+ * Implements hook_install().
+ */
+function roomify_contact_page_install() {
+
+  // Let anyone use the site-wide contact form.
+  user_role_grant_permissions(DRUPAL_ANONYMOUS_RID, array('access site-wide contact form'));
+  user_role_grant_permissions(DRUPAL_AUTHENTICATED_RID, array('access site-wide contact form'));
+
+}
+
+
+/**
+ * Implements hook_enable().
+ */
+function roomify_contact_page_enable() {
+  // Normally we would add code here to create a main menu item but for now
+  // we've left this code inside each Roomify site implementation, for example,
+  // see the hook_enable() implementation in vacation_rental.install. Please
+  // leave the following lines commented out; they are here for reference only.
+  //
+  // Create the contact page link in the main menu.
+  // roomify_system_create_update_menu_link('Contact', 'contact', 'main-menu', 10);
+}
+

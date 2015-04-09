@@ -1,0 +1,7 @@
+name = Roomify Contact Page
+description = A customized version of the Drupal site-wide contact form provided by the Contact module.
+core = 7.x
+package = RoomifyCore
+php = 5.2.4
+version = 7.x-1.0
+dependencies[] = contact

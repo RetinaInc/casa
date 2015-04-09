@@ -1,0 +1,119 @@
+/**
+ * @file
+ * Default page layout.
+ *
+ * The default page layout provides a simple header with branding on the left
+ * and main menu on the right, with a simple single-column site footer.
+ */
+.l-leader-inner,
+.l-header-inner,
+.l-content-inner,
+.l-footer-inner,
+.l-nav-inner {
+  /* containers */
+  *zoom: 1;
+  max-width: 960px;
+  _width: 960px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  margin: 0 auto; }
+  .l-leader-inner:after,
+  .l-header-inner:after,
+  .l-content-inner:after,
+  .l-footer-inner:after,
+  .l-nav-inner:after {
+    content: "";
+    display: table;
+    clear: both; }
+
+.l-content-inner {
+  padding-top: 20px;
+  padding-bottom: 20px; }
+
+.l-header-col-1 {
+  width: 42.92683%;
+  float: left;
+  margin-right: 1.46341%;
+  display: inline;
+  /* LTR */ }
+
+.l-header-col-2 {
+  width: 55.60976%;
+  float: right;
+  margin-right: 0;
+  *margin-left: -1.2em;
+  display: inline;
+  /* LTR */
+  text-align: right; }
+
+@media (min-width: 61em) {
+  .l-leader-inner,
+  .l-header-inner,
+  .l-content-inner,
+  .l-footer-inner,
+  .l-nav-inner {
+    padding-left: 0;
+    padding-right: 0; } }
+body.l-page-default.casa-stacked .l-content-inner {
+  max-width: none;
+  _width: 100%;
+  padding-left: 0;
+  padding-right: 0; }
+
+.l-region-highlighted-inner,
+.l-region-bottom-inner,
+.l-section-main-inner,
+.l-section-secondary-inner {
+  *zoom: 1;
+  max-width: 960px;
+  _width: 960px;
+  padding-left: 18px;
+  padding-right: 18px;
+  margin-left: auto;
+  margin-right: auto; }
+  .l-region-highlighted-inner:after,
+  .l-region-bottom-inner:after,
+  .l-section-main-inner:after,
+  .l-section-secondary-inner:after {
+    content: "";
+    display: table;
+    clear: both; }
+
+.l-region-highlighted-inner {
+  padding-left: 0;
+  padding-right: 0; }
+
+.l-region-secondary-left {
+  margin-bottom: 1.2em; }
+
+@media (min-width: 44em) {
+  .l-region-main-left {
+    float: left;
+    padding-right: 15px;
+    width: 30.8%; }
+
+  .l-region-main-right {
+    float: left;
+    width: 69.2%; }
+
+  .l-region-secondary-left {
+    clear: none;
+    margin-bottom: 0;
+    width: 49.26829%;
+    float: left;
+    margin-right: 1.46341%; }
+
+  .l-region-secondary-right {
+    clear: none;
+    width: 49.26829%;
+    float: right;
+    margin-right: 0; } }
+@media (min-width: 61em) {
+  .l-region-highlighted-inner,
+  .l-region-bottom-inner,
+  .l-section-main-inner,
+  .l-section-secondary-inner {
+    padding-left: 0;
+    padding-right: 0; } }

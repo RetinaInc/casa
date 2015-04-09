@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Casa image styles feature.
+ */
+
+include_once 'casa_image_styles.features.inc';

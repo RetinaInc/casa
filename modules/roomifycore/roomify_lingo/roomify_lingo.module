@@ -1,0 +1,461 @@
+<?php
+
+/**
+ * Implements hook_init().
+ */
+function roomify_lingo_init() {
+  list($unit, $Unit, $units, $Units, $type, $Type, $types, $Types) = roomify_lingo_variables();
+
+  $en = variable_get('locale_custom_strings_en', array());
+
+  // Date intervals for Rooms increment by night, not by days.
+  $en['']['1 day|@count days'] = '1 night|@count nights';
+  $en['']['1 day'] = '1 night';
+  $en['']['@count days'] = '@count nights';
+
+  // Clean up Commerce.
+  $en['']['%title added to <a href="!cart-url">your cart</a>.'] = '';
+  $en['']['Line items saved.'] = '';
+  $en['']['Shopping cart contents'] = 'Your reservation';
+  $en['']['Checkout complete'] = "Your reservation is complete";
+  $en['']['Add some items to your cart and then try checking out.'] = '';
+
+  // Commerce Orders as 'Reservations'
+  $en['']['Review order'] = "Review reservation";
+  $en['']['Review your order before continuing.'] = "Review your reservation before continuing.";
+
+  // Rebrand Rooms as Roomify.
+  $en['']['Rooms'] =
+          "Roomify";
+  $en['']['Administer Rooms.'] =
+          "Administer Roomify.";
+  $en['']['Rooms UI'] =
+          "Roomify UI";
+  $en['']['Rooms Availability Search'] =
+          "Roomify Availability Search";
+  $en['']['Rooms product'] =
+          "Roomify product";
+  $en['']['Rooms Booking'] =
+          "Roomify Booking";
+  $en['']['Rooms Basic Booking'] =
+          "Roomify Basic Booking";
+  $en['']['Rooms Package'] =
+          "Roomify Package";
+  $en['']['Orders related to Rooms bookings'] =
+          "Orders related to Roomify bookings";
+  $en['']['Products that are bookable with Rooms.'] =
+          "Products that are bookable with Roomify.";
+  $en['']['This will create a Commerce order for bookings created via the admin interface of Rooms.'] =
+          "This will create a Commerce order for bookings created via the Roomify admin interface.";
+
+
+  // Bookings
+  $en['']['Rooms Booking'] =
+          "$Unit Booking";
+  $en['']['Rooms Basic Booking'] =
+          "$Unit Basic Booking";
+  $en['']['Orders related to Rooms bookings'] =
+          "Orders related to $Unit bookings";
+  $en['']['Represents a booking of a Rooms product.'] =
+          "Represents a booking of a $Unit product.";
+
+
+  // Bookable Unit Types
+  $en['']['Unit Type'] =
+          "$Type";
+  $en['']['Unit Types'] =
+          "$Types";
+  $en['']['Booking Unit Type'] =
+          "$Type";
+  $en['']['bookable unit type'] =
+          "$type";
+  $en['']['Bookable Unit Types'] =
+          "$Types";
+  $en['']['bookable unit types'] =
+          "$types";
+  $en['']['Booking Unit Type Label.'] =
+          "$Type Label.";
+  $en['']['Save unit type'] =
+          "Save $type";
+  $en['']['Administer unit types'] =
+          "Administer $types";
+  $en['']['Add bookable unit type'] =
+          "Add a $type";
+  $en['']['Import bookable unit type'] =
+          "Import a $type";
+  $en['']['Unit type description source'] =
+          "$Type description source";
+  $en['']['The human-readable name of this unit type.'] =
+          "The human-readable name of this $type.";
+  $en['']['Unit types that can be referenced'] =
+          "$Types that can be referenced";
+  $en['']['The human-readable name of this unit type.'] =
+          "The human-readable name of this $type.";
+  $en['']['A unique machine-readable name for this unit type. It must only contain lowercase letters, numbers, and underscores.'] =
+          "A unique machine-readable name for this $type. It must only contain lowercase letters, numbers, and underscores.";
+  $en['']['The default number of people that can sleep in units of this type.'] =
+          "The default number of people that can sleep in $units of this type.";
+  $en['']['The default number of childrens that can sleep in units of this type.'] =
+          "The default number of childrens that can sleep in units of this type.";
+  $en['']['Create and delete fields for bookable unit types, and set their permissions.'] =
+          "Create and delete fields for $types, and set their permissions.";
+  $en['']['This unit type has associated units. Please delete all units before attempting to delete this unit type.'] =
+          "This $type has associated $units. Please delete all $units before attempting to delete this $type.";
+
+  // Bookable Units
+  $en['']['Unit'] =
+          "$Unit";
+  $en['']['Units'] =
+          "$Units";
+  $en['']['Bookable Unit'] =
+          "$Unit";
+  $en['']['Bookable Units'] =
+          "$Units";
+  $en['']['Bookable Units List'] =
+          "List of $Units";
+  $en['']['Add a Bookable Unit'] =
+          "Add a $Unit";
+  $en['']['Bookable Unit Name'] =
+          "$Unit name";
+  $en['']['Unit Name'] =
+          "$Unit Name";
+  $en['']['Bookable Unit Default State'] =
+          "$Unit Default State";
+  $en['']['Bookable Unit State'] =
+          "$Unit Status";
+  $en['']['Booked Unit ID'] =
+          "Booked $Unit ID";
+  $en['']['Booked Unit Status'] =
+          "Booked $Unit Status";
+  $en['']['Booked Unit Price'] =
+          "Booked $Unit Price";
+  $en['']['Unit Description'] =
+          "$Unit Description";
+  $en['']['Bookable Unit Description.'] =
+          "$Unit Description.";
+  $en['']['Unit Base Price'] =
+          "$Unit Base Price";
+  $en['']['Update Unit Pricing'] =
+          "Update $Unit Pricing";
+  $en['']['Update Unit Availability'] =
+          "Update $Unit Availability";
+  $en['']['Reference Booking Unit availability'] =
+          "Reference $Unit availability";
+  $en['']['Select Unit Description source'] =
+          "Select $Unit Description source";
+  $en['']['Save Unit'] =
+          "Save $Unit";
+  $en['']['Delete Unit'] =
+          "Delete $Unit";
+  $en['']['Assign Unit'] =
+          "Assign $Unit";
+  $en['']['Re-assign Unit'] =
+          "Re-assign $Unit";
+  $en['']['Book units'] =
+          "Book $units";
+  $en['']['Units chosen'] =
+          "$Units chosen";
+  $en['']['Administer bookable units'] =
+          "Administer $units";
+  $en['']['Edit and delete all bookable units'] =
+          "Edit and delete all $units";
+  $en['']['%type_name: Edit any bookable unit'] =
+          "%type_name: Edit any $unit";
+  $en['']['Unit Availability Search'] =
+          "$Unit Availability Search";
+  $en['']['Price per unit per night'] =
+          "Price per $unit per night";
+  $en['']['Currently assigned unit'] =
+          "Currently assigned $unit";
+  $en['']['Currently assigned unit: @unit_name / @type'] =
+          "Currently assigned $unit: @unit_name / @type";
+  $en['']['Select at least one unit'] =
+          "Select at least one $unit";
+  $en['']['The following units are available for the chosen dates; please select one.'] =
+          "The following $units are available for the chosen dates; please select one.";
+  $en['']['Change the availability status of the units selected below for the specified date range.'] =
+          "Change the availability status of the $units selected below for the specified date range.";
+  $en['']['We apologize it seems the unit is no longer available'] =
+          "We apologize it seems the $unit is no longer available";
+  $en['']['Base price is per unit per night'] =
+          "Base price is per $unit per night";
+  $en['']['Uncheck this to temporarily prevent the unit from being booked or appearing in any searches without affecting the scheduled availability on the calendar.'] =
+          "Uncheck this to temporarily prevent the $unit from being booked or appearing in any searches without affecting the scheduled availability on the calendar.";
+  $en['']['Manage Booking Unit Availability'] =
+          "Manage $Unit Availability";
+  $en['']['Select Unit Description source'] =
+          "Select $Unit Description source";
+  $en['']['Show availability of individual units.'] =
+          "Show availability of individual $units.";
+  $en['']['Display unit name in place of availability state label.'] =
+          "Display $unit name in place of availability state label.";
+  $en['']['Choose whether to display results grouped by unit type or as single units.'] =
+          "Choose whether to display results grouped by $type or as single $units.";
+  $en['']['Apply a pricing adjustment in bulk to the units selected below for the specified date range.'] =
+          "Apply a pricing adjustment in bulk to the $units selected below for the specified date range.";
+  $en['']['Display the list of referenceable units as a textfield with autocomplete behaviour.'] =
+          "Display the list of referenceable $units as a textfield with autocomplete behaviour.";
+  $en['']['%name: unable to find a unit with that title.'] =
+          "%name: unable to find a $unit with that title.";
+  $en['']['The total number of people staying in this unit (including adults and children).'] =
+          "The total number of people staying in this $unit (including adults and children).";
+  $en['']['The number of children staying in this unit.'] =
+          "The number of children staying in this $unit.";
+  $en['']['No @unit_type units are available for specified party size on the chosen dates.'] =
+          "No @unit_type $units are available for specified party size on the chosen dates.";
+  $en['']['The following units are available for the chosen dates; please select one.'] =
+          "The following $units are available for the chosen dates; please select one.";
+  $en['']['@unit_type available bookable units'] =
+          "Available @unit_type $units";
+  $en['']['A unit must be re-assigned for this booking'] =
+          "A $unit must be re-assigned for this booking";
+  $en['']['A unit has not been assigned for this booking'] =
+          "A $unit has not been assigned for this booking";
+  $en['']['Unit availability has been updated.'] =
+          "$Unit availability has been updated.";
+  $en['']['Unit availability could not be updated.'] =
+          "$Unit availability could not be updated.";
+  $en['']['The unit for which this booking was made.'] =
+          "The $unit for which this booking was made.";
+  $en['']['We are sorry, booking unit is no longer available.'] =
+          "We are sorry, $unit is no longer available for booking.";
+  $en['']['We apologize it seems the unit is no longer available'] =
+          "We apologize it seems the $unit is no longer available";
+  $en['']['Allows users to book units'] =
+          "Allows users to book $units";
+  $en['']['Please select a unit in order to continue with booking'] =
+          "Please select a $unit in order to continue with booking";
+  $en['']['Choose whether to display results grouped by unit type or as single units.'] =
+          "Choose whether to display results grouped by $type or as single $units.";
+  $en['']['Select the states for which units should show as available in a search.'] =
+          "Select the states for which $units should show as available in a search.";
+  $en['']['Units marked as available.'] =
+          "$Units marked as available.";
+  $en['']['Units marked as available on request.'] =
+          "$Units marked as available on request.";
+  $en['']['Display unit type selector'] =
+          "Display $type selector";
+  $en['']['Display a Unit Type selector in availability search form.'] =
+          "Display a $Type selector in availability search form.";
+  $en['']['Choose what state to leave the unit in by default.'] =
+          "Choose what state to leave the $unit in by default.";
+  $en['']['Create multiple units'] =
+          "Create multiple $units";
+  $en['']['Save time by creating multiple bookable units at once all containing the settings above. You can still personalise each one later on.'] =
+          "Save time by creating multiple $units at once all containing the settings above. You can still personalise each one later on.";
+  $en['']['How many units should we create'] =
+          "How many $units should we create";
+  $en['']['Are you sure you want to delete Unit %name?'] =
+          "Are you sure you want to delete $Unit %name?";
+  $en['']['The unit %name has been deleted.'] =
+          "The $unit %name has been deleted.";
+  $en['']['Deleted unit %name.'] =
+          "Deleted $unit %name.";
+  $en['']['Provide a link to the edit form for the unit'] =
+          "Provide a link to the edit form for the $unit";
+  $en['']['Provide a link to delete the unit.'] =
+          "Provide a link to delete the $unit.";
+  $en['']['Display all operations available for this unit.'] =
+          "Display all operations available for this $unit.";
+
+  // Above this, we adjust the terminology to fit the kind of Roomify install
+  // but this doesnt work perfectly in all cases, so here we can make any
+  // further adjustments for special cases.
+
+  // For example, the vacation rental site, only has one unit, and one unit type
+  // so we should adjust the UI accordingly:
+  if (variable_get('roomify_lingo', 'hotel') == 'property_rental') {
+    $en['']['Units'] =
+            "$Unit";
+    $en['']['Bookable Units List'] =
+            "$Unit";
+    $en['']['Unit Types'] =
+            "$Type";
+    $en['']['Bookable Unit Types'] =
+            "$Type";
+    $en['']['Create and administer units that can be booked, such as rooms for a hotel. Bookable units have availability and pricing information attached to them by the Rooms module and can have extra fields added via the standard Drupal Field API functionality.'] =
+            "Edit and configure your Roomify property's availability, pricing, and amenities.";
+    $en['']['@count @unit_type units available from @price'] =
+            "@count options available from @price";
+    $en['']['Rooms Terminology'] = 
+          "Roomify Terminology";
+    $en['']['Change Rooms Terminology'] = 
+          "Change Roomify Terminology";
+    $en['']['Configure settings and business rules for Rooms management.'] = 
+          "Configure settings and business rules for Roomify management.";
+
+  }
+
+  variable_set('locale_custom_strings_en', $en);
+}
+
+/**
+ * Overrides default strings provided by Rooms to make them more suitable
+ * for the various Roomify installation types.
+ *
+ * @return array
+ */
+function roomify_lingo_variables() {
+  // Property rentals agency:
+  //   Bookable Unit = Property
+  //   Bookable Unit Type = Property Type
+  //
+  // Single property rental:
+  //   Bookable Unit = Property
+  //   Bookable Unit Type =  Property Type
+  //
+  // BnB:
+  //   Bookable Unit = Room
+  //   Bookable Unit Type = Room Type (possibly hidden from UI if only one)
+  //
+  // Hotel:
+  //   Bookable Unit = Room
+  //   Bookable Unit Type = Room Type
+  //
+  switch (variable_get('roomify_lingo', 'hotel')) {
+
+    case 'property_rental':
+      $unit = 'property';
+      $Unit = 'Property';
+      $units = 'property'; // No plural for a single rental.
+      $Units = 'Property'; // No plural for a single rental.
+
+      $type = 'property type';
+      $Type = 'Property Type';
+      $types = 'property type'; // No plural for a single rental.
+      $Types = 'Property Type'; // No plural for a single rental.
+      return array($unit, $Unit, $units, $Units, $type, $Type, $types, $Types);
+
+    case 'property_rental_agency':
+      $unit = 'property';
+      $Unit = 'Property';
+      $units = 'properties';
+      $Units = 'Properties';
+
+      $type = 'property type';
+      $Type = 'Property Type';
+      $types = 'property types';
+      $Types = 'Property Types';
+      return array($unit, $Unit, $units, $Units, $type, $Type, $types, $Types);
+
+    case 'hotel':
+    case 'bnb':
+      $unit = 'room';
+      $Unit = 'Room';
+      $units = 'rooms';
+      $Units = 'Rooms';
+
+      $type = 'room type';
+      $Type = 'Room Type';
+      $types = 'room types';
+      $Types = 'Room Types';
+      return array($unit, $Unit, $units, $Units, $type, $Type, $types, $Types);
+
+    default:
+      $unit = 'unit';
+      $Unit = 'Unit';
+      $units = 'units';
+      $Units = 'Units';
+
+      $type = 'type';
+      $Type = 'Type';
+      $types = 'types';
+      $Types = 'Types';
+      return array($unit, $Unit, $units, $Units, $type, $Type, $types, $Types);
+  }
+}
+
+/**
+ * Implements hook_views_default_views_alter().
+ */
+function roomify_lingo_views_default_views_alter(&$views) {
+
+  // 'Orders' are known as 'Reservations' in the Travel industry.
+  $handler =& $views['commerce_user_orders']->display['order_page']->handler;
+  $handler->display->display_options['title'] = t('Reservations');
+  $handler->display->display_options['menu']['title'] = t('Reservations');
+  $handler->display->display_options['tab_options']['title'] = t('Reservations');
+
+  // Improve Line item title text on the cart summary view.
+  $handler =& $views['commerce_cart_summary']->display['default']->handler;
+  $handler->display->display_options['fields']['line_item_title']['label'] = t('Booking information');
+
+  // Improve Line item title text on the order details view.
+  $handler =& $views['commerce_line_item_table']->display['default']->handler;
+  $handler->display->display_options['fields']['line_item_title']['label'] = t('Booking information');
+}
+
+/**
+ * Implements hook_view_pre_render().
+ */
+function roomify_lingo_views_pre_render(&$view) {
+  global $user;
+
+  // Make the reservation page more personal and interesting. UX++
+  if ($view->name == 'commerce_user_orders' && $view->current_display == 'order_page') {
+
+    if ($view->args[0] == $user->uid) {
+      $view->build_info['title'] = t('Your Reservations');
+    } else {
+      $account = user_load($view->args[0]);
+      $view->build_info['title'] = t('Reservations from @username', array('@username' => $account->name));
+    }
+
+    $orders_have_been_changed = FALSE;
+    foreach($view->result as $i => &$result) {
+      // For simple bookings we can load and show the line item label.
+      if (count($result->_field_data['order_id']['entity']->commerce_line_items['und']) === 1) {
+        $id = $result->_field_data['order_id']['entity']->commerce_line_items['und'][0]['line_item_id'];
+        $line_item = entity_load('commerce_line_item', array($id));
+        $result->commerce_order_order_number = t('Reservation #@order_number: @line_item_label', array('@order_number' => $result->commerce_order_order_number, '@line_item_label' => $line_item[$id]->line_item_label));
+      }
+      // But if there are multiple line items, don't waste resources, simple lable.
+      else {
+        $result->commerce_order_order_number = t('Reservation #@order_number', array('@order_number' => $result->commerce_order_order_number));
+      }
+
+      // Will be set to true only if created date != changed date.
+      $orders_have_been_changed &= ($result->commerce_order_created != $result->commerce_order_changed);
+    }
+    if (!$orders_have_been_changed) {
+      $view->field['changed']->options['exclude'] = TRUE;
+    }
+  }
+
+  // Rooms Products (i.e. Bookings) should always have a quantity of 1, so
+  // here we double check that this is true, and if so, hide the price and
+  // quantity fields in the cart summary view. UX++
+  if ($view->name == 'commerce_cart_summary' && $view->current_display == 'default') {
+    $hide_price_and_quantity = TRUE;
+    foreach ($view->result as $key => &$result) {
+      if ($result->_field_data['commerce_line_item_field_data_commerce_line_items_line_item_']['entity']->quantity != 1.00) {
+        $hide_price_and_quantity = FALSE;
+      }
+    }
+    if ($hide_price_and_quantity) {
+      $view->field['commerce_unit_price']->options['exclude'] = TRUE;
+      $view->field['quantity']->options['exclude'] = TRUE;
+    }
+  }
+
+  // Rooms Products (i.e. Bookings) should always have a quantity of 1, so
+  // here we double check that this is true, and if so, hide the price and
+  // quantity fields in the cart summary view. UX++
+  if ($view->name == 'commerce_line_item_table' && $view->current_display == 'default') {
+    $hide_price_and_quantity = TRUE;
+    foreach ($view->result as $key => &$result) {
+      if ($result->_field_data['line_item_id']['entity']->quantity != 1.00) {
+        $hide_price_and_quantity = FALSE;
+      }
+    }
+    if ($hide_price_and_quantity) {
+      $view->field['commerce_unit_price']->options['exclude'] = TRUE;
+      $view->field['quantity']->options['exclude'] = TRUE;
+    }
+
+    // On the Line item table view, the label is shown in parenthesis beside
+    // the title, but Rooms Line items have the same value for both of these
+    // fields, so hide the later from view. UX++
+    $view->field['line_item_label']->options['exclude'] = TRUE;
+  }
+}

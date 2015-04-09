@@ -1,0 +1,91 @@
+
+.galleria-responsive {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+.galleria-responsive:before {
+  content: "";
+  display: block;
+  width: 100%;
+  padding-bottom: 56.25%; /* Adjust this to the aspect ratio of the images in the slideshow */
+  position: relative;
+}
+.galleria-responsive-inside {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+.galleria-responsive .galleria-content {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* Below this line are custom theme settings for when the galleria is responsive */
+
+.galleria-responsive .galleria-stage {
+  top: 0;
+}
+.galleria-responsive .galleria-thumbnails-container {
+  bottom: -100px;
+  -webkit-transition: bottom 0.35s ease-in-out;
+     -moz-transition: bottom 0.35s ease-in-out;
+      -ms-transition: bottom 0.35s ease-in-out;
+       -o-transition: bottom 0.35s ease-in-out;
+          transition: bottom 0.35s ease-in-out;
+}
+.galleria-responsive .galleria-image-nav-left,
+.galleria-responsive .galleria-image-nav-right {
+  -webkit-transition: background-position 0.35s ease-in-out;
+     -moz-transition: background-position 0.35s ease-in-out;
+      -ms-transition: background-position 0.35s ease-in-out;
+       -o-transition: background-position 0.35s ease-in-out;
+          transition: background-position 0.35s ease-in-out;
+}
+.galleria-responsive .galleria-image-nav-left {
+  background-position: 7px 50%;
+}
+.galleria-responsive .galleria-image-nav-right {
+  background-position: -52px 50%;
+}
+.galleria-responsive .galleria-info {
+  max-width: 100%;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+}
+
+@media all and (min-width: 620px) {
+  .galleria-responsive .galleria-stage {
+    top: -100px;
+  }
+  .galleria-responsive .galleria-thumbnails-container {
+    bottom: 0;
+  }
+  .galleria-responsive .galleria-image-nav-left {
+    background-position: 7px 100%;
+  }
+  .galleria-responsive .galleria-image-nav-right {
+    background-position: -52px 100%;
+  }
+  .galleria-responsive .galleria-info {
+    bottom: 94px;
+    max-width: 50%;
+    left: 8px;
+  }
+}
+
+@media all and (min-width: 960px) {
+  .galleria-responsive .galleria-image-nav-left {
+    background-position: 0 100%;
+  }
+  .galleria-responsive .galleria-image-nav-right {
+    background-position: -45px 100%;
+  }
+}

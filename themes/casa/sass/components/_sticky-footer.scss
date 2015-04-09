@@ -1,0 +1,21 @@
+/* sticky-footer */
+
+html,
+body,
+.l-page {
+  height: 100%;
+}
+.l-page {
+  display: table;
+  width: 100%;
+}
+.l-header,
+.l-content,
+.l-footer {
+  display: table-row;
+  height: 1px;
+}
+.l-content {
+  height: 100%;
+}
+/* end sticky footer */

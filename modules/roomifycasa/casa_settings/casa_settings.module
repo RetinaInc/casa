@@ -1,0 +1,155 @@
+<?php
+
+/**
+ * @file
+ * Manage Settings - Settings that can be configured
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function casa_settings_menu() {
+  $items  =  array();
+	$items['admin/rooms/config/casa-settings'] = array(
+    'title' => 'Basic Information',
+    'description' => 'Some information about your Casa.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('rooms_booking_casa_settings_form'),
+    'access arguments' => array('configure room settings'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function casa_settings_theme() {
+  return array(
+    'casa_settings__weather' => array(
+      'template' => 'templates/weather-status',
+      'variables' => array(),
+    ),
+  );
+}
+/**
+ * Implementation of hook_ctools_plugin_directory() to let the system know
+ * where all our own plugins are.
+ */
+function casa_settings_ctools_plugin_directory($owner, $plugin_type) {
+   if ($owner == 'ctools' && $plugin_type == 'content_types') {
+    return 'plugins/' . $plugin_type;
+  }
+}
+
+function rooms_booking_casa_settings_form() {
+  $t = get_t();
+
+  // Management vertical tabs.
+  $form['casa_settings'] = array(
+    '#type' => 'vertical_tabs',
+  );
+  $form['weather_widget'] = array(
+    '#type' => 'fieldset',
+    '#title' => $t('Weather widget'),
+    '#description' => $t('Please set the city and country to populate the weather widget with appropriate data.'),
+    '#group' => 'casa_settings',
+    '#weight' => 0,
+  );
+
+  $form['weather_widget']['casa_settings_city'] = array(
+    '#type' => 'textfield',
+    '#title' => $t('Select your city'),
+    '#description' => $t("If you leave this field empty, the widget won't be displayed."),
+    '#default_value' => variable_get('casa_settings_city', ''),
+  );
+
+  $form['weather_widget']['casa_settings_country'] = array(
+    '#type' => 'textfield',
+    '#title' => $t('Select your country'),
+    '#default_value' => variable_get('casa_settings_country', ''),
+  );
+
+  $form['weather_widget']['casa_settings_units'] = array(
+    '#type' => 'radios',
+    '#title' => $t('Select the units'),
+    '#options' => array(
+      'metric' => $t('Celsius &deg;C'),
+      'imperial' => $t('Farenheit &deg;F')
+    ),
+    '#default_value' => variable_get('casa_settings_units', 'metric'),
+  );
+
+  $form['social_links'] = array(
+    '#type' => 'fieldset',
+    '#title' => $t('Contact info'),
+    '#description' => $t('Please provide additional information about your property website.'),
+    '#group' => 'casa_settings',
+    '#weight' => 0,
+  );
+
+  $form['social_links']['casa_settings_facebook'] = array(
+    '#title' => $t("Facebook URL"),
+    '#type' => 'textfield',
+    '#description' => 'e.g. http://facebook.com',
+    '#default_value' => variable_get('casa_settings_facebook', ''),
+  );
+
+  $form['social_links']['casa_settings_twitter'] = array(
+    '#title' => $t("Twitter URL"),
+    '#type' => 'textfield',
+    '#description' => 'e.g. http://twitter.com',
+    '#default_value' => variable_get('casa_settings_twitter', ''),
+  );
+
+  $form['social_links']['casa_settings_google_plus'] = array(
+    '#title' => $t("Google+ URL"),
+    '#type' => 'textfield',
+    '#description' => 'e.g. http://plus.google.com',
+    '#default_value' => variable_get('casa_settings_google_plus', ''),
+  );
+
+   $form['social_links']['casa_settings_instagram'] = array(
+    '#title' => $t("Instagram URL"),
+    '#type' => 'textfield',
+    '#description' => 'e.g. http://instagram.com',
+     '#default_value' => variable_get('casa_settings_instagram', ''),
+  );
+
+  $form['social_links']['casa_settings_pinterest'] = array(
+    '#title' => $t("Pinterest URL"),
+    '#type' => 'textfield',
+    '#description' => 'e.g. http://pinterest.com',
+    '#default_value' => variable_get('casa_settings_pinterest', ''),
+  );
+
+  $form['social_links']['casa_settings_telephone'] = array(
+    '#title' => $t("Telephone"),
+    '#type' => 'textfield',
+    '#description' => 'e.g. 123-345-7890',
+    '#default_value' => variable_get('casa_settings_telephone', ''),
+  );
+
+  return system_settings_form($form);
+}
+
+/**
+ * Validation callback for rooms_booking_casa_settings_form.
+ */
+function rooms_booking_casa_settings_form_validate($form, &$form_state) {
+  $social_networks = array('facebook', 'twitter', 'google_plus', 'pinterest', 'instagram');
+
+  foreach ($social_networks as $social_network) {
+    $variable = $form_state['values']['casa_settings_' . $social_network];
+    if ($social_network == 'google_plus') {
+      $social_network = 'plus.google';      
+    }
+    if (!empty($variable)) {
+      $domain = parse_url($variable, PHP_URL_HOST);
+      if (!isset($domain) || $domain != $social_network . '.com') {
+        form_set_error('casa_settings_' . $social_network, t('Your @social_network profile url must belong to @domain domain.', array('@social_network' => ucfirst($social_network), '@domain' => 'http://' . $social_network . '.com')));
+      }
+    }
+  }
+}

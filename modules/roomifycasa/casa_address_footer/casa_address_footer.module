@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Casa address footer feature.
+ */
+
+include_once 'casa_address_footer.features.inc';

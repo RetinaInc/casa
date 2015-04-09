@@ -1,0 +1,8 @@
+name = Casa Settings
+description = Give the possibility to configure some settings for the Casa
+core = 7.x
+version = 1.x-dev
+
+package = RoomifyCasa
+
+dependencies[] = rooms_booking

@@ -1,0 +1,30 @@
+@import "layouts/**/*";
+
+/*
+ * Fix broken Panels UI.
+ */
+#panels-dnd .panel-pane {
+  word-break: break-word;
+}
+
+
+/*
+ * Responsive sticky footer.
+ */
+html, body {
+  height: 100%;
+}
+.l-page {
+  display: table;
+  height: 100%;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+}
+.l-header, .l-content, .l-footer {
+  display: table-row;
+  height: 1px;
+}
+.l-content {
+  height: auto;
+}

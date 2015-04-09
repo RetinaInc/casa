@@ -1,0 +1,32 @@
+
+table {
+  width: 100%;
+  max-width: $container-width;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  caption {
+    font-size: 1.125em;
+  }
+}
+
+th, td {
+  padding: .67em 1em;
+}
+
+th, th a {
+  color: $blue;
+  border-bottom: 2px solid $blue;
+  background: none;
+}
+
+tr.odd {
+  background: none;
+}
+td {
+  background: none;
+}
+tr.even {
+  background: $offwhite;
+}

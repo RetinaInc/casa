@@ -1,0 +1,8 @@
+.rooms-search-result__unit_options fieldset.form-wrapper {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.rooms-search-result__unit_options fieldset.form-wrapper legend {
+  display: none;
+}

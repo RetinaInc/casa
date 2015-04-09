@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Casa Slideshow feature.
+ */
+
+include_once 'casa_slideshow.features.inc';

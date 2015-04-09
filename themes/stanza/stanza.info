@@ -1,0 +1,34 @@
+name = Stanza
+description = The Roomify base theme. Built on the Omega framework.
+base theme = omega
+screenshot = screenshot.png
+engine = phptemplate
+core = 7.x
+stylesheets[all][] = css/stanza.normalize.css
+stylesheets[all][] = css/stanza.layouts.css
+stylesheets[all][] = css/stanza.hacks.css
+stylesheets[all][] = css/stanza.styles.css
+stylesheets[all][] = css/stanza.no-query.css
+
+
+;---------// Regions (disabled, we're using panels_everywhere for layout)
+;regions[header] = Header
+;regions[navigation] = Navigation
+;regions[highlighted] = Highlighted
+;regions[help] = Help
+;regions[content] = Content
+;regions[sidebar_first] = First Sidebar
+;regions[sidebar_second] = Second Sidebar
+;regions[footer] = Footer
+
+
+;----------// Panels
+  plugins[panels][layouts] = layouts
+
+  ; Enable style plugins if required
+  ;plugins[panels][styles] = plugins/styles
+  ;api[panels][styles][version] = 2
+
+;----------// Page manager
+  api[page_manager][pages_default][version] = 1
+  api[page_manager][pages_default][path] = panels

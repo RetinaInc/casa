@@ -1,0 +1,11 @@
+name = Casa address footer
+description = Create an address footer views to show accommodation address
+core = 7.x
+package = RoomifyCasa
+version = 7.x-1.0
+project = casa_address_footer
+dependencies[] = views
+features[ctools][] = views:views_default:3.0
+features[features_api][] = api:2
+features[views_view][] = address_footer
+features_exclude[dependencies][ctools] = ctools

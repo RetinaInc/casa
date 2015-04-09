@@ -1,0 +1,65 @@
+<?php
+/**
+ * @file
+ * Code for the Roomify Slideshow feature.
+ */
+
+include_once 'roomify_galleria.features.inc';
+
+/**
+ * Implements hook_preprocess_galleria_container().
+ */
+function roomify_galleria_preprocess_galleria_container(&$vars) {
+
+  // Override the default galleria container template, in order to add
+  // a class name to the wrapper.
+  if (!empty($vars['settings']['optionset'])) {
+
+    // Create a class from the option set name.
+    $vars['optionset_class'] = drupal_html_class($vars['settings']['optionset']);
+
+    // Use our custom template.
+    $vars['theme_hook_suggestions'][] = 'galleria_container__roomify';
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function roomify_galleria_theme($existing, $type, $theme, $path) {
+  return array(
+    'galleria_container__roomify' => array(
+      'variables' => array('items' => array(), 'settings' => array()),
+      'template' => 'theme/galleria-container--roomify',
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_widget_form_alter().
+ */
+function roomify_galleria_field_widget_form_alter(&$element, &$form_state, $context) {
+  if ($context['field']['type'] == 'image' && $context['instance']['widget']['type'] == 'image_image' && !empty($context['instance']['settings']['alt_field'])) {
+    foreach (element_children($element) as $delta) {
+      $element[$delta]['#process'][] = 'roomify_galleria_field_widget_process';
+    }
+  }
+}
+
+/**
+ * Custom image widget callback modifies the alt/title text field descriptions.
+ */
+function roomify_galleria_field_widget_process($element, &$form_state, $form) {
+  if (isset($element['alt'])) {
+    $element['alt']['#title'] = t('Description');
+    unset($element['alt']['#description']);
+    $element['alt']['#type'] = 'textarea';
+    $element['alt']['#weight'] = 19;
+  }
+  if (isset($element['title'])) {
+    $element['title']['#title'] = t('Title');
+    unset($element['title']['#description']);
+    $element['alt']['#weight'] = 20;
+  }
+  return $element;
+}

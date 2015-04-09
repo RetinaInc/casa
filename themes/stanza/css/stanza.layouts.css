@@ -1,0 +1,74 @@
+/**
+ * @file
+ * Default page layout.
+ *
+ * The default page layout provides a simple header with branding on the left
+ * and main menu on the right, with a simple single-column site footer.
+ */
+.l-page-default .l-header,
+.l-page-default .l-content,
+.l-page-default .l-footer {
+  /* containers */
+  *zoom: 1;
+  max-width: 59em;
+  _width: 59em;
+  padding-left: 1em;
+  padding-right: 1em;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 960px;
+  margin: 0 auto;
+}
+.l-page-default .l-header:after,
+.l-page-default .l-content:after,
+.l-page-default .l-footer:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.l-page-default .l-branding {
+  width: 43.03797%;
+  float: left;
+  margin-right: 1.26582%;
+  display: inline;
+  /* LTR */
+}
+.l-page-default .l-user {
+  width: 55.6962%;
+  float: right;
+  margin-right: 0;
+  *margin-left: -1em;
+  display: inline;
+  /* LTR */
+}
+
+/*
+ * Fix broken Panels UI.
+ */
+#panels-dnd .panel-pane {
+  word-break: break-word;
+}
+
+/*
+ * Responsive sticky footer.
+ */
+html, body {
+  height: 100%;
+}
+
+.l-page {
+  display: table;
+  height: 100%;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.l-header, .l-content, .l-footer {
+  display: table-row;
+  height: 1px;
+}
+
+.l-content {
+  height: auto;
+}

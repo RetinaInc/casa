@@ -1,0 +1,56 @@
+<?php
+/**
+ * @file
+ * Code for the Mapping feature.
+ */
+
+include_once 'mapping.features.inc';
+
+/**
+ * Implements hook_form_FORM_ID_alter for location_node_form.
+ */
+function mapping_form_location_node_form_alter(&$form, $form_state) {
+  $form['#validate'][] = 'mapping_location_single_accommodation_validate';
+}
+
+/**
+ * Custom validation callback for location node form.
+ */
+function mapping_location_single_accommodation_validate($form, &$form_state) {
+  if ($form_state['values']['field_accommodation']['und'][0]['value']) {
+    if (variable_get('mapping_location_accommodation', FALSE)) {
+      if ($form_state['values']['nid'] != variable_get('mapping_location_accommodation', FALSE)) {
+        form_set_error('field_accommodation', t("You can't set more than one node as accommodation, your current accommodation's id is !current_accommodation.", array('!current_accommodation' => l(variable_get('mapping_location_accommodation', FALSE), 'node/' . variable_get('mapping_location_accommodation', FALSE)))));
+      }
+    }
+    else {
+      if ($form_state['values']['nid']) {
+        variable_set('mapping_location_accommodation', $form_state['values']['nid']);
+      }
+      else {
+        $form_state['node']->set_accommodation = TRUE;
+      }
+    }
+  }
+  else {
+    if ($form_state['values']['nid'] == variable_get('mapping_location_accommodation', FALSE)) {
+      variable_set('mapping_location_accommodation', FALSE);
+    }
+  }
+}
+
+/**
+ * Implements hook_node_insert().
+ */
+function mapping_node_insert($node) {
+  if (isset($node->set_accommodation)) {
+    variable_set('mapping_location_accommodation', $node->nid);
+  }
+}
+
+/**
+ * Implements hook_leaflet_views_alter_points_data_alter().
+ */
+function mapping_leaflet_views_alter_points_data_alter($result,&$points) {
+  $points[0]['entity'] = node_load($result->nid);
+}

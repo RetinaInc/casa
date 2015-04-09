@@ -1,0 +1,8 @@
+/**
+ * Read more links
+ */
+a.read-more:hover,
+.node-readmore a:hover {
+  opacity: 0.9;
+  filter: alpha(opacity=90);
+}

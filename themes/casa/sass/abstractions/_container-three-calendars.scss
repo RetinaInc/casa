@@ -1,0 +1,15 @@
+@media screen and (max-width:960px) {
+  .rooms-three-month-calendar {
+    #calendar,
+    #calendar1,
+    #calendar2 {
+      width: 100%;
+      padding: 0px;
+    }
+  }
+  .front {
+  	.rooms-three-month-calendar {
+  		padding: 15px;
+  	}
+  }
+}

@@ -1,0 +1,18 @@
+/**
+ * @file
+ *   Roomify theming overrides when using Ember theme.
+ */
+
+/* Add 32x32 icon to page title of Rooms admin pages. */
+.page-admin-rooms .page-title:before {
+  content: "";
+  display: inline-block;
+  width: 24px;
+  height: 32px;
+  background: url(../images/icon-rooms-32-dark.png) no-repeat 50% 50%;
+}
+
+/* Fix layout of inline checkboxes for Ember theme */
+.rooms-bulk-pricing-form .form-item-day-options .form-checkboxes {
+  padding: 15px 0;
+}

@@ -1,0 +1,46 @@
+<?php
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function roomify_contact_page_form_contact_site_form_alter(&$form, &$form_state) {
+
+  // Set sensible weights on the contact form fields, so that we can add our
+  // date fields in the right spot.
+  $form['name']['#weight'] = -20;
+  $form['mail']['#weight'] = -10;
+  $form['subject']['#weight'] = 0;
+  $form['message']['#weight'] = 10;
+  $form['copy']['#weight'] = 20;
+  $form['actions']['#weight'] = 100;
+
+  // Hide the subject field.
+  $form['subject']['#access'] = FALSE;
+
+  // Add the Rooms date range fields to the contact form.
+  $form['dates'] = rooms_date_range_fields();
+
+  // Make the dates appear above the message.
+  $form['dates']['#weight'] = -5;
+
+  // Make the date fields optional.
+  $form['dates']['rooms_start_date']['#required'] = FALSE;
+  $form['dates']['rooms_end_date']['#required'] = FALSE;
+
+}
+
+/**
+ * Implements hook_mail_alter().
+ */
+function roomify_contact_page_mail_alter(&$message) {
+  // Add the Rooms date range fields to the contact page email body, if they
+  // were specified.
+  if ($message['id'] == 'contact_page_mail') {
+    if ($message['params']['rooms_end_date']) {
+      array_unshift($message['body'], t('Departure Date') . ': ' . $message['params']['rooms_end_date']);
+    }
+    if ($message['params']['rooms_start_date']) {
+      array_unshift($message['body'], t('Arrival Date') . ': ' . $message['params']['rooms_start_date']);
+    }
+  }
+}

@@ -1,0 +1,76 @@
+<?php
+
+/**
+ * @file
+ * Install and update hooks for casa_system module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function casa_system_install() {
+  db_update('system')
+    ->fields(array(
+      'weight' => 1,
+    ))
+    ->condition('type', 'module')
+    ->condition('name', 'casa_system')
+    ->execute();
+}
+
+/**
+ * Implements hook_update().
+ */
+function casa_system_update_7001() {
+  variable_set('rooms_presentation_style', ROOMS_INDIVIDUAL);
+
+  db_update('system')
+    ->fields(array(
+      'weight' => 1,
+    ))
+    ->condition('type', 'module')
+    ->condition('name', 'casa_system')
+    ->execute();
+}
+
+/**
+ * Enable Views Slideshow Galleria module
+ */
+function casa_system_update_7002() {
+  module_enable(array('views_slideshow_galleria'), TRUE);
+}
+
+/**
+ * Migrate content from field_slideshow_images to field_images_collection
+ */
+function casa_system_update_7003() {
+  features_revert_module('casa_slideshow');
+  $result = db_select('node', 'n')
+    ->fields('n', array('nid'))
+    ->condition('type', 'slideshow')
+    ->execute()
+    ->fetchCol();
+
+  $nodes = node_load_multiple($result);
+
+  foreach($nodes as $node) {
+    foreach($node->field_slideshow_images['und'] as $images) {
+      $field_collection_item = entity_create('field_collection_item', array('field_name' => 'field_images_collection'));
+      $field_collection_item->setHostEntity('node', $node);
+      $field_collection_item->field_image_description['und'][0]['value'] = $images['alt'];
+      unset($images['alt']);
+      unset($images['title']);
+      $field_collection_item->field_image_image['und'][0] = $images;
+      $field_collection_item->save();
+    }
+  }
+
+  field_delete_field('field_slideshow_images');
+}
+
+/**
+ * Enable Casa image styles module.
+ */
+function casa_system_update_7004() {
+  module_enable(array('casa_image_styles'), TRUE);
+}

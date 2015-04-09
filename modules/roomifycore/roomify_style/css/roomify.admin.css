@@ -1,0 +1,53 @@
+/**
+ * @file
+ *   Styles to improve the Roomify admin experience.
+ */
+
+/* Drupal date fields are just plain ugly out of the box */
+.container-inline-date {
+  clear: none;
+}
+.container-inline-date .date-padding {
+  padding: 0;
+  float: none;
+}
+.container-inline-date .form-type-textfield label {
+  display: none;
+}
+.container-inline-date > .form-item {
+  margin-right: 0;
+}
+.container-inline-date .form-item .form-item {
+  padding: 0;
+}
+
+/* Override default address field styles */
+#addressfield-wrapper {
+  padding: 1em 0;
+}
+#addressfield-wrapper .form-item {
+  float:  none;
+  margin: 0;
+}
+#addressfield-wrapper .form-item:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+#addressfield-wrapper label {
+  width: 8em;
+  float: left;
+  clear: none;
+}
+#addressfield-wrapper .form-text,
+#addressfield-wrapper .form-select {
+  width: 14em;
+  float: left;
+  clear: none;
+}
+#addressfield-wrapper input {
+  width: 100%;
+  max-width: 100%;
+}

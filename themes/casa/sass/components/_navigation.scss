@@ -1,0 +1,20 @@
+/*
+ * Navigation
+ */
+.l-nav {
+  .links,
+  .links li,
+  .pane-availability-calendar-popup {
+    display: inline-block;
+  }
+  .links {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.pane-availability-calendar-popup {
+  .ajax-progress { // Hide the ajax throbber (the modal already has a throbber)
+    display: none;
+  }
+}

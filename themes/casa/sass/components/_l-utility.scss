@@ -1,0 +1,21 @@
+/**
+ * Site utility region
+ */
+.l-utility {
+  & > div {
+    display: inline-block;
+  }
+  .language-switcher-locale-url {
+    list-style: none;
+    padding-left: 13px;
+    li {
+      display: inline;
+      &:after {
+        content: " |";
+      }
+      &.last:after {
+        content: "";
+      }
+    }
+  }
+}

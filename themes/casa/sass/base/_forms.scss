@@ -1,0 +1,190 @@
+/* Form styles */
+
+%form-item-max-width {
+  width: 100%;
+  max-width: 32em;
+  _width: 32em;
+  @media (max-width: 32em) {
+    max-width: 100%;
+    _width: 100%;
+  }
+}
+%form-item-border {
+  border: 1px solid $form_border_color;
+}
+%form-item-inner-shadow {
+  box-shadow: inset 0 1px 2px $form_border_color;
+}
+%focus-glow {
+  outline: none;
+  box-shadow: 0 0 3px 2px scale-color($blue, $lightness: 60%); //#7DADD9; //
+}
+
+// Text fields
+.form-text,
+input[type=password],
+input[type=text] {
+  @extend %form-item-border;
+  @extend %form-item-inner-shadow;
+  @extend %form-item-max-width;
+  padding: .3em .5em .3em;
+  font-size: 1.1875em;
+  &:focus {
+    @extend %focus-glow;
+  }
+}
+// File upload fields
+input[type=file] {
+  &:focus {
+    @extend %focus-glow;
+  }
+}
+// Buttons (see also _buttons.scss partial)
+input[type=button],
+input[type=submit] {
+  &:focus {
+    @extend %focus-glow;
+  }
+}
+
+// Checkboxes
+input[type=checkbox] {
+  &:focus {
+    @extend %focus-glow;
+    @include border-radius(30%);
+  }
+}
+
+// Radios
+input[type=radio] {
+  &:focus {
+    @extend %focus-glow;
+    @include border-radius(50%);
+  }
+}
+
+// Select boxes
+// 1. fix a display bug in webkit where focus with box-shadow causes
+//    a layout change.
+select {
+  @extend %form-item-border;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  padding: 3px 25px 3px 8px;
+  text-indent: 0.01px;
+  text-overflow: '';
+  line-height: normal;
+  &[multiple] {
+    @extend %form-item-inner-shadow;
+  }
+  &:focus {
+    @extend %focus-glow;
+  }
+}
+
+// Disabled elements
+textarea[disabled],
+select[disabled],
+input[disabled], {
+  &, &:hover, &:focus {
+    zoom: 1;
+    opacity: 0.3;
+    filter: alpha(opacity=30);
+    cursor: not-allowed;
+  }
+}
+
+// Textareas
+textarea {
+  @extend %form-item-max-width;
+  @extend %form-item-border;
+  @extend %form-item-inner-shadow;
+  width: 100%;
+  padding: .4em .7em .5em;
+  font-size: 1.1875em;
+  &:focus,
+  &:focus + .grippie {
+    @extend %focus-glow;
+  }
+}
+.form-textarea-wrapper {
+  font-size: 1.1875em;
+  @extend %form-item-max-width;
+  textarea {
+    font-size: 1em;
+  }
+  .cke_focus {
+    @extend %focus-glow;
+  }
+}
+.text-format-wrapper {
+  max-width: 45em; // Exception to the max-width rule.
+  _width: 45em;
+  box-sizing: border-box;
+  @media (max-width: 45em) {
+    max-width: 100%;
+    _width: 100%;
+  }
+  textarea,
+  .form-textarea-wrapper {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
+// Fieldsets
+fieldset {
+  border: 1px solid $border_color;
+  margin: 2em 2px;
+  padding: 0.75em 1.125em 0.75em;
+}
+
+// Labels
+.form-item label,
+.form-actions label {
+  font-size: 1.2em;
+  font-weight: 300;
+  margin-bottom: .4em;
+}
+label.option {
+  vertical-align: middle;
+}
+
+// Miscellaneous items
+.form-item {
+  .description {
+    margin-top: .4em;
+    font-style: italic;
+  }
+}
+.marker,
+.form-required {
+  color: scale-color($red, $lightness: 70%);
+}
+/* Make asterisk a bit larger */
+.form-required {
+  font-size: 150%; // font-specific size; adjust as needed in sub-theme
+  line-height: .6em; // font-specific size; adjust as needed in sub-theme
+  vertical-align: bottom;
+}
+
+// Form errors
+input.error, textarea.error, select.error {
+  border: 2px solid scale-color($red, $lightness: 60%);
+}
+
+// Password confirmation
+.form-type-password-confirm {
+  max-width: 38em;
+  width: 100%;
+  input {
+    width: 48%;
+  }
+}
+.password-strength {
+  width: 48%;
+}

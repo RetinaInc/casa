@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Casa Amenities feature.
+ */
+
+include_once 'casa_amenities.features.inc';

@@ -1,0 +1,24 @@
+/*
+ * Things to do page
+ */
+.pane-activity {
+  .views-exposed-form-activity-default {
+    margin-bottom: 20px;
+  }
+  .views-row {
+    margin-bottom: 15px;
+    padding-bottom: 11px;
+  }
+  .views-field-field-activity-image {
+    float: left;
+    margin-right: 15px;
+  }
+}
+.page-things-to-do {
+  .pane-custom {
+    float: right;
+    img {
+      vertical-align: text-bottom;
+    }
+  }
+}

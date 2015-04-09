@@ -1,0 +1,43 @@
+<?php
+/**
+ * @file
+ * Code for the Casa Footer Bean Type feature.
+ */
+
+include_once 'casa_footer_bean_type.features.inc';
+
+/**
+ * Implements hook_form_alter().
+ */
+function casa_footer_bean_type_form_bean_form_alter(&$form, &$form_state, $form_id) {
+
+  // Note: other common alterations found in casa_system_form_bean_form_alter().
+  if ($form['#bundle'] == 'footer') {
+
+    // Alter title field description text, to provide more explanations
+    if (isset($form['bean']['#value']->delta) && $form['bean']['#value']->delta == 'footer') {
+
+      $description = t('The title will appear above the footer line in larger text; leave any field here blank to hide it.') . '<p>' . t('Note: You may want to add text like <em>“Copyright &copy; @site @year”</em> to your footer. Keep in mind, Footer Text appears before social links and Futher Text appears after.', array('@site' => variable_get('site_name',''), '@year' => date('Y'))) . '</p>';
+
+      $form['title']['#description'] = $description;
+      if (isset($form['title_field'])) {
+        $language = $form['title_field']['#language'];
+        $form['title_field'][$language][0]['value']['#description'] = $description;
+      }
+    }
+
+    // Hide the label field once it has been set.
+    if (!empty($form['label']['#default_value'])) {
+      $form['label']['#type'] = 'hidden';
+    }
+
+    // The footer block uses only the "default" view mode.
+    $form['view_mode']['#type'] = 'hidden';
+
+    // Ensure text field appears below revisions.
+    if (isset($form['revision'])) {
+      $form['field_footer_further_text']['#weight'] = $form['revision']['#weight'] - 1;
+    }
+  }
+
+}

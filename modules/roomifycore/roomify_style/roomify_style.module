@@ -1,0 +1,92 @@
+<?php
+
+/**
+ * Implements hook_library_alter().
+ */
+function roomify_style_library_alter(&$libraries, $module) {
+  // Add rooms icon.
+  if ($module === 'navbar' && isset($libraries['navbar'])) {
+    $libraries['navbar']['css'][] = drupal_get_path('module', 'roomify_style') . '/css/roomify.navbar.css';
+  }
+}
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function roomify_style_preprocess_html(&$vars) {
+
+  $css = drupal_add_css();
+
+  if (in_array('misc/vertical-tabs.css', array_keys($css))) {
+    drupal_add_css(drupal_get_path('module', 'roomify_style') . '/css/roomify.vertical-tabs.css');
+  }
+
+  foreach($css as $key => $value) {
+    if (strpos($key, 'css/rooms_unit.css') !== FALSE) {
+      drupal_add_css(drupal_get_path('module', 'roomify_style') . '/css/roomify.rooms_unit.css');
+    }
+  }
+
+  // Improve the admin experience with some custom styles.
+  if (path_is_admin(current_path())) {
+
+    // Add general css
+    drupal_add_css(drupal_get_path('module', 'roomify_style') . '/css/roomify.admin.css');
+    drupal_add_css(drupal_get_path('module', 'roomify_style') . '/css/roomify.fullcalendar.css');
+
+    // Rooms fixes issues with various admin themes.
+    $theme = variable_get('admin_theme', 'seven');
+    $version = '';
+    if ($info = system_get_info('theme', variable_get('admin_theme', 'seven')) && isset($info['version'])) {
+      $version = $info['version'];
+    }
+
+    // Shiny theme adjustments.
+    if ($theme == 'shiny') {
+      drupal_add_css(drupal_get_path('module', 'roomify_style') . '/css/roomify.shiny.css');
+    }
+
+    // Ember theme adjustments.
+    elseif ($theme == 'ember') {
+      drupal_add_css(drupal_get_path('module', 'roomify_style') . '/css/roomify.ember.css');
+
+      // Fix issues with Ember 7.x-1.x.
+      if (is_numeric(strpos($version, '7.x-1.'))) {
+        drupal_add_css(drupal_get_path('module', 'roomify_style') . '/css/roomify.ember-7.x-1.x.css');
+      }
+
+      // Fix issues with Ember 7.x-2.x.
+      if (is_numeric(strpos($version, '7.x-2.'))) {
+        drupal_add_css(drupal_get_path('module', 'roomify_style') . '/css/roomify.ember-7.x-2.x.css');
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_view_pre_render().
+ */
+function roomify_style_views_pre_render(&$view) {
+  if (in_array($view->name, array('commerce_user_orders', 'commerce_cart_summary', 'commerce_line_item_table'))) {
+    drupal_add_css(drupal_get_path('module', 'roomify_style') . '/css/roomify.commerce.css');
+  }
+}
+
+/**
+ * Implements hook_panels_pre_render().
+ */
+function roomify_style_panels_pre_render($panels_display, $renderer) {
+
+  // Add a body class for all panel layouts present on a given page. This
+  // functionality piggy-backs on Panels 'body_classes_to_add' functionality.
+  // And let's us do clever things like null out the max-width of container
+  // regions on certain layouts where we need region wrappers inside the panel
+  // to reach the edge of a page, for theming purposes.
+  $panel_body_css = &drupal_static('panel_body_css');
+  $layout_class = drupal_html_class($panels_display->layout);
+  if (!empty($panel_body_css['body_classes_to_add'])) {
+    $panel_body_css['body_classes_to_add'] .= ' ' . $layout_class;
+  } else {
+    $panel_body_css['body_classes_to_add'] = $layout_class;
+  }
+}

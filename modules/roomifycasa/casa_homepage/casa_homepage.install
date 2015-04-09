@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * Implements hook_enable().
+ */
+function casa_homepage_enable() {
+  variable_set('site_frontpage', 'homepage');
+}
+
+/**
+ * Implements hook_disable().
+ */
+function casa_homepage_disable() {
+  // Reset frontpage back to Drupal default only if it wasn't changed manually.
+  if (variable_get('site_frontpage', 'node') == 'homepage') {
+    variable_set('site_frontpage', 'node');
+  }
+}

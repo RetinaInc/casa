@@ -1,0 +1,9 @@
+name = Casa Example Content
+description = Provides example content for the Casa Distro.
+core = 7.x
+package = RoomifyCasa
+version = 7.x-1.0
+project = casa_example_content
+dependencies[] = migrate
+features[features_api][] = api:2
+files[] = casa_example_content.migrate.inc

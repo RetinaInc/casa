@@ -1,0 +1,27 @@
+<?php
+
+/**
+ * @file
+ * Install and update hooks for casa_settings module.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function casa_settings_uninstall() {
+  $variables = array(
+    'casa_settings_city',
+    'casa_settings_country',
+    'casa_settings_units',
+    'casa_settings_facebook',
+    'casa_settings_twitter',
+    'casa_settings_google_plus',
+    'casa_settings_instagram',
+    'casa_settings_pinterest',
+    'casa_settings_telephone'
+  );
+
+  foreach ($variables as $variable) {
+    variable_del($variable);
+  }
+}

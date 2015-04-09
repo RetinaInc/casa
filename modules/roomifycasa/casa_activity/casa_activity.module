@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Casa Activity feature.
+ */
+
+include_once 'casa_activity.features.inc';

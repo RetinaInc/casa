@@ -1,0 +1,33 @@
+/**
+ * Homepage
+ */
+.pane-node-field-homepage-choose-features {
+  width: 100%;
+  & > div > div {
+    & > .field__item {
+      float: left;
+      width: 31.82%;
+      margin-right: 2.2%;
+    }
+    & > .field__item:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.front {
+  // Remove the top and bottom padding on the homepage.
+  .l-content-inner {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .pane-availability-three-calendars {
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.galleria-info-text {
+  display: block;
+}

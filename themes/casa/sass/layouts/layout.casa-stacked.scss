@@ -1,0 +1,82 @@
+@import "susy";
+// Susy Variables
+
+// Set consistent vertical and horizontal spacing units.
+$vert-spacing-unit: 20px;
+$horz-spacing-unit: 1.2em;
+
+// Define Susy grid variables mobile first.
+$total-columns: 4;
+$column-width: 4em;
+$gutter-width: $horz-spacing-unit;
+$grid-padding: 18px;
+
+$container-style: magic;
+$container-width: 960px + $grid-padding*2;
+
+// Susy Media Layouts @see http://susy.oddbird.net/guides/reference/#ref-media-layouts
+$tab: 44em 16; // At 44em use 16 columns.
+$desk: 61em 16; // At 61em use 16 columns.
+
+
+body.l-page-default.casa-stacked {
+  // Remove the max-width and padding from the content container
+  // set in the site template layout l-page-default, so we can extend
+  // the background of specific regions and sections to the edge of the
+  // screen on larger screens.
+  .l-content-inner {
+    max-width: none;
+    _width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.l-region-highlighted-inner,
+.l-region-bottom-inner,
+.l-section-main-inner,
+.l-section-secondary-inner {
+  @include container;
+}
+
+// Kill padding on highlighted region to make edges of hero unit / slideshow
+// extend to width of screen.
+.l-region-highlighted-inner {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.l-region-secondary-left {
+  margin-bottom: $horz-spacing-unit;
+}
+
+@include at-breakpoint($tab) {
+  .l-region-main-left {
+    float: left;
+    padding-right: 15px;
+    width: 30.8%;
+  }
+  .l-region-main-right {
+    float: left;
+    width: 69.2%;
+  }
+  .l-region-secondary-left {
+    clear: none;
+    margin-bottom: 0;
+    @include span-columns(8, 16);
+  }
+  .l-region-secondary-right {
+    clear: none;
+    @include span-columns(8 omega, 16);
+  }
+}
+
+@include at-breakpoint($desk) {
+  .l-region-highlighted-inner,
+  .l-region-bottom-inner,
+  .l-section-main-inner,
+  .l-section-secondary-inner {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}

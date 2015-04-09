@@ -1,0 +1,9 @@
+/**
+ * @file
+ *   Roomify theming overrides when using Navbar module.
+ */
+
+/* Style the Rooms icon in the Navbar */
+.navbar-icon-rooms:before {
+  background-image: url("../images/icon-rooms-20-gray.png");
+}

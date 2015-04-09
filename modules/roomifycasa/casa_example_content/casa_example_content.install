@@ -1,0 +1,30 @@
+<?php
+
+/**
+ * Implements hook_enable().
+ *
+ * Add sample unit content when this module is enabled.
+ */
+function casa_example_content_enable() {
+
+  // Ensure this module has a higher weight than the vacation_rental module.
+  
+  $migration_names = array(
+    'CasaExampleContentPage',
+    'CasaExampleContentFurtherInfo',
+    'CasaExampleContentFeatures',
+    'CasaExampleContentSlideshow',
+    'CasaExampleContentAmenities',
+    'CasaExampleContentAmenitiesFieldCollection',
+    'CasaExampleContentActivity',
+    'CasaExampleContentSlideshowFieldCollection'
+  );
+
+ 
+  $migrations = migrate_migrations();
+
+  foreach ($migration_names as $name) {
+    $migration = $migrations[$name];
+    $migration->processImport();
+  }
+}

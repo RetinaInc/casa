@@ -1,0 +1,22 @@
+/* Roomify theming overrides when using Shiny theme */
+
+/* Add 20x20 icon to page title of Rooms admin pages. */
+.page-admin-rooms .page-title:before {
+  content: "";
+  display: inline-block;
+  width: 25px;
+  height: 20px;
+  background: url(../images/icon-rooms-20.png) no-repeat 50% 50%;
+}
+
+.rooms-management-form fieldset fieldset fieldset {
+  background-color: transparent;
+}
+
+.rooms-management-form #edit-actions {
+  padding-top: 1.3em;
+}
+
+.rooms-management-form #edit-day-options {
+  padding: 0.5em 0 1.1em;
+}

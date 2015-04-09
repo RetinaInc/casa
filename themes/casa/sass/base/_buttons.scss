@@ -1,0 +1,43 @@
+/**
+ * Buttons
+ */
+.button {
+
+  display: inline-block;
+  margin: 0 .4em 0 0;
+  padding: .4em 1.2em .5em;
+
+  font-size: 1.1875em;
+  font-weight: 400;
+  line-height: normal;
+
+  color: white;
+  background: $blue;
+  border: 0;
+  @include border-radius(1.4em);
+
+  &:focus {
+    outline: none;
+    @extend %focus-glow;
+  }
+  &:active,
+  &:focus {
+    background: $dark_gray;
+    color: white;
+  }
+  &:hover {
+    opacity: 0.9;
+    filter: alpha(opacity=90);
+  }
+  &[disabled], &.disabled {
+    background: #ccc;
+  }
+}
+
+.form-submit {
+  @extend .button;
+}
+
+a:focus {
+  @extend %focus-glow;
+}

@@ -1,0 +1,25 @@
+/**
+ * @file
+ *   Roomify theming overrides when using Ember 7.x-2.x theme.
+ */
+
+/*
+ * Ember 7.x-1.x theme doesn't style autocomplete fields well enough for small
+ * screens and Ctools pop-up dialogs.
+ */
+input.form-autocomplete {
+  max-width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+@media (max-width:500px) {
+  input.form-autocomplete {
+    width: 100%;
+  }
+}
+
+.rooms-management-form div#edit-actions input.form-submit {
+  margin-top: 0;
+  margin-bottom: 0;
+}

@@ -1,0 +1,27 @@
+@import "susy";
+/**
+ * @file
+ * Default page layout.
+ *
+ * The default page layout provides a simple header with branding on the left
+ * and main menu on the right, with a simple single-column site footer.
+ */
+.l-page-default {
+
+  .l-header,
+  .l-content,
+  .l-footer { /* containers */
+    @include container;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .l-branding {
+    @include span-columns(7, 16);  /* LTR */
+  }
+
+  .l-user {
+    @include span-columns(9 omega, 16); /* LTR */
+  }
+
+}

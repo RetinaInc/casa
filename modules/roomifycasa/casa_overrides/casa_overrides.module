@@ -1,0 +1,68 @@
+<?php
+
+/**
+ * Include fixes for Block module.
+ */
+include 'modules/casa_overrides.block.inc';
+
+/**
+ * Include overrides for Rooms module.
+ */
+include 'modules/casa_overrides.rooms.inc';
+
+
+/**
+ * Implements hook_form_alter().
+ */
+function casa_overrides_form_alter(&$form, &$form_state, $form_id) {
+
+  // Hide sticky and promoted checkboxes for the Casa content types.
+  if (in_array(str_replace('_node_form', '', $form_id), array('page', 'amenities', 'features', 'further_info', 'homepage', 'slideshow'))) {
+    $form['options']['promote']['#access'] = FALSE;
+    $form['options']['sticky']['#access'] = FALSE;
+  }
+}
+
+/**
+ * Implements hook_entity_property_info_alter().
+ */
+function casa_overrides_entity_property_info_alter(&$info) {
+  $deposit = rules_config_load('rooms_booking_manager_deposit');
+
+  if ($deposit && $deposit->active) {
+    $info['commerce_line_item']['properties']['deposit_remainder'] = array(
+      'type' => 'text',
+      'label' => t('Deposit remainder information'),
+      'description' => t('Deposit remainder information for the current line item'),
+      'getter callback' => 'casa_overrides_entity_metadata_deposit_remainder_getter',
+    );
+  }
+}
+
+/**
+ * Getter callback for custom deposit remainder property.
+ */
+function casa_overrides_entity_metadata_deposit_remainder_getter($item, array $options, $name, $type, $info) {
+  $full_price = $item->rooms_booked_price['und'][0]['value'];
+  $deposit = rules_config_load('rooms_booking_manager_deposit');
+  if ($deposit && $deposit->active) {
+    $fixed_amount = $multiply_amount = NULL;
+    foreach ($deposit as $action) {
+      if ($action instanceof RulesAction) {
+        if ($action->getElementName() == 'commerce_line_item_unit_price_amount') {
+          $fixed_amount = $action->settings['amount'];
+        }
+        elseif ($action->getElementName() == 'commerce_line_item_unit_price_multiply') {
+          $multiply_amount = $action->settings['amount'];
+        }
+      }
+    }
+    $amount = isset($fixed_amount) ? ($fixed_amount) : ($full_price * $multiply_amount);
+
+    $remainder = ($full_price - $amount) / 100;
+    $currency_setting = commerce_currency_load(commerce_default_currency());
+    $currency_symbol = $currency_setting['symbol'];
+    return t('- deposit - Remainder: @currency_symbol @remainder', array('@remainder' => $remainder, '@currency_symbol' => $currency_symbol));
+  }
+  return '';
+}

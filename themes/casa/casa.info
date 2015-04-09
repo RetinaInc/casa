@@ -1,0 +1,76 @@
+name = Casa
+description = The default theme for the Casa distro.
+base theme = stanza
+screenshot = screenshot.png
+engine = phptemplate
+core = 7.x
+
+; Make this theme available in Roomify installer.
+roomify_type = theme
+
+stylesheets[all][] = css/casa.normalize.css
+stylesheets[all][] = css/casa.layouts.css
+stylesheets[all][] = css/casa.hacks.css
+stylesheets[all][] = css/casa.styles.css
+stylesheets[all][] = css/casa.no-query.css
+
+
+stylesheets[all][] = css/stanza.normalize.css
+stylesheets[all][] = css/stanza.layouts.css
+stylesheets[all][] = css/stanza.hacks.css
+stylesheets[all][] = css/stanza.styles.css
+stylesheets[all][] = css/stanza.no-query.css
+
+; Casa provides its own menu item theming, so disable core here.
+stylesheets[all][] = system.menus.theme.css
+
+scripts[] = js/casa.behaviors.js
+
+;----------// Panels
+plugins[panels][layouts] = layouts
+
+;----------// Default settings
+settings[toggle_logo] = 1
+settings[toggle_name] = 0
+settings[toggle_slogan] = 0
+settings[toggle_node_user_picture] = 1
+settings[toggle_comment_user_picture] = 1
+settings[toggle_comment_user_verification] = 1
+settings[toggle_favicon] = 1
+settings[toggle_main_menu] = 1
+settings[toggle_secondary_menu] = 1
+settings[omega_toggle_front_page_content] = 1
+settings[default_logo] = 1
+settings[logo_path] = ''
+settings[logo_upload] = ''
+settings[default_favicon] = 1
+settings[favicon_path] = ''
+settings[favicon_upload] = ''
+settings[omega_enable_warning] = 1
+settings[omega_toggle_extension_layouts] = 0
+settings[omega_layout] = ''
+settings[omega_toggle_extension_development] = 0
+settings[omega_rebuild_theme_registry] = ''
+settings[omega_rebuild_aggregates] = ''
+settings[omega_browser_width_indicator] = ''
+settings[omega_livereload] = ''
+settings[omega_livereload_script] = ''
+settings[omega_livereload_host] = ''
+settings[omega_livereload_port] = ''
+settings[omega_demo_regions] = ''
+settings[omega_toggle_extension_compatibility] = 1
+settings[omega_conditional_classes_html] = 1
+settings[omega_apple_touch] = 0
+settings[omega_cleartype] = 1
+settings[omega_handheld_friendly] = 1
+settings[omega_mobile_optimized] = 1
+settings[omega_viewport] = 1
+settings[omega_viewport_user_scaleable] = 1
+settings[omega_chrome_edge] = 1
+settings[omega_chrome_popup] = 0
+settings[omega_chrome_notice] = 0
+settings[omega_toggle_extension_assets] = 0
+settings[omega_js_footer] = ''
+settings[omega_css_exclude] = ''
+settings[omega_js_exclude] = ''
+settings[omega_libraries] = ''
