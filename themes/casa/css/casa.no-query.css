@@ -556,12 +556,10 @@ body,
   .tabs--secondary a.active, .tabs--secondary a:hover, .tabs--secondary a:focus {
     background: #f1f1f1; }
 
-.rooms-three-month-calendar-hidden .event-start {
-  bottom: -10px !important;
-  border-width: 10px !important; }
 .rooms-three-month-calendar-hidden .event-end {
-  bottom: -14px !important;
-  border-width: 10px !important; }
+  margin-bottom: 30px !important; }
+.rooms-three-month-calendar-hidden .rooms-calendar-second-row-events {
+  margin-top: -19px; }
 
 /* Vertical Tabs */
 .vertical-tabs ul.vertical-tabs-list li a:focus {

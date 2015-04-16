@@ -1,10 +1,8 @@
 .rooms-three-month-calendar-hidden {
-	.event-start {
-		bottom: -10px !important;
-		border-width: 10px !important;
-	}
 	.event-end {
-		bottom: -14px !important;
-		border-width: 10px !important;
+		margin-bottom: 30px !important;
+	}
+	.rooms-calendar-second-row-events {
+		margin-top: -19px;
 	}
 }
