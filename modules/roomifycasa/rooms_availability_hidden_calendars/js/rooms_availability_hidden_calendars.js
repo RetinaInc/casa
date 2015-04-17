@@ -3,9 +3,8 @@
 Drupal.behaviors.roomsAvailabilityThreeCalendars = {
   attach: function(context) {
 
-    //$('.rooms-modal-booking-form .start-date').hide();
-    //$('.rooms-modal-booking-form .end-date').hide();
     $('.rooms-hidden-calendars-booking-form .form-submit').attr('disabled', 'disabled');
+    $('.rooms-hidden-calendars-booking-form #edit-unit-enquiry').removeAttr('href');
 
     $('.rooms-hidden-calendars-booking-form .rooms-date-range input').bind('keyup change', function () {
       $form = $(this).closest("form");
@@ -91,6 +90,8 @@ Drupal.behaviors.roomsAvailabilityThreeCalendars = {
           $('.rooms-hidden-calendars-booking-form .end-date input').datepicker('setDate', end);
 
           $('.rooms-hidden-calendars-booking-form .form-submit').removeAttr('disabled').focus();
+          $('.rooms-hidden-calendars-booking-form #edit-unit-enquiry').attr('href', '/?q=contact/' + start.format('DD-MM-YYYY') + '/' + end.format('DD-MM-YYYY'));
+
         },
         //Remove Time from events.
         eventRender: function(event, el) {

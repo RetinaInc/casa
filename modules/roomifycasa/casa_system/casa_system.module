@@ -549,3 +549,27 @@ function casa_system_form_alter(&$form, &$form_state) {
 function casa_system_form_rooms_booking_manager_change_search_form_alter(&$form, &$form_state, $form_id) {
   $form['info']['units']['#access'] = FALSE;
 }
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * FORM_ID = book_unit_form_builder
+ * Add an enquiry link to near "Book this" button.
+ */
+function casa_system_form_book_unit_form_builder_alter(&$form, &$form_state, $form_id) {
+  $dates = '';
+  if (isset($form['start_date']['#value']) && isset($form['end_date']['#value'])) {
+    $start = explode('-', $form['start_date']['#value']);
+    $end = explode('-', $form['end_date']['#value']);
+    $start = array_reverse($start);
+    $end = array_reverse($end);
+    $dates = '/' . implode('-', $start) . '/' . implode('-', $end);
+  }
+
+  $form['actions']['unit_enquiry_message'] = array(
+    '#type' => 'link',
+    '#title' => t('or send a query about these dates'),
+    '#href' => '/contact' . $dates,
+    '#weight' => '15',
+  );
+}

@@ -228,6 +228,11 @@ function rooms_availability_hidden_calendars_booking_form($form, &$form_state, $
     '#submit' => $submit + array('rooms_availability_hidden_calendars_booking_form_submit'),
     '#ajax' => array('callback' => 'rooms_availability_hidden_calendars_booking_form_ajax_submit'),
   );
+  $form['unit_booking']['actions']['unit_enquiry'] = array(
+    '#type' => 'link',
+    '#title' => t('or send a query about these dates'),
+    '#href' => 'contact',
+  );
 
   // We append the validate handler to #validate in case a form callback_wrapper
   // is used to add validate handlers earlier.

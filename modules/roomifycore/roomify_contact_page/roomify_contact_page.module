@@ -27,6 +27,14 @@ function roomify_contact_page_form_contact_site_form_alter(&$form, &$form_state)
   $form['dates']['rooms_start_date']['#required'] = FALSE;
   $form['dates']['rooms_end_date']['#required'] = FALSE;
 
+  $url = explode('/', $_GET['q']);
+
+  if (isset($url[1]) && isset($url[2])) {
+    $start = new DateTime($url[1]);
+    $end = new DateTime($url[2]);
+    $form['dates']['rooms_start_date']['#default_value'] = $start->format('Y-m-d');
+    $form['dates']['rooms_end_date']['#default_value'] = $end->format('Y-m-d');
+  }
 }
 
 /**
