@@ -10,6 +10,12 @@ Drupal.behaviors.roomsAvailabilityThreeCalendars = {
       $form = $(this).closest("form");
       if ($('.end-date input', $form).val() && $('.start-date input', $form).val()) {
         $('.rooms-hidden-calendars-booking-form .form-submit').removeAttr('disabled').focus();
+        $start = $('.start-date input', $form).val();
+        $end = $('.end-date input', $form).val();
+        $start = $start.replace(/\//g, '-');
+        $end = $end.replace(/\//g, '-');
+
+        $('.rooms-hidden-calendars-booking-form #edit-unit-enquiry').attr('href', '/?q=contact/' + $start + '/' + $end);
       }
     });
 
