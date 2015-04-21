@@ -1,0 +1,5 @@
+name = Casa Booking Manager
+description = Custom booking manager for Casa
+core = 7.x
+
+package = RoomifyCasa

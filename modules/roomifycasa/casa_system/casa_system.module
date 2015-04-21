@@ -572,4 +572,112 @@ function casa_system_form_book_unit_form_builder_alter(&$form, &$form_state, $fo
     '#href' => '/contact' . $dates,
     '#weight' => '15',
   );
+  // Change Base price label.
+  if (isset($form['price'])) {
+    $form['price']['#markup'] = str_replace('Cost', 'Base price', $form['price']['#markup']);
+    $form['price']['#markup'] = '<div class="casa-base-price-deposit-removed">' .  $form['price']['#markup'] . '</div>';
+  }
+  // Change Final price label.
+  if (isset($form['new_price'])) {
+    $form['new_price']['#markup'] = str_replace('Cost', 'Final price', $form['new_price']['#markup']);
+  }
+  // Add options label.
+  foreach (rooms_unit_get_unit_options(rooms_unit_load(1)) as $option) {
+    $option_name = strtolower(str_replace(array(':', ' '), '_', $option['name']));
+    $operation = casa_get_option_operation_label($option);
+    $form['options'][$option_name] = array(
+      '#type' => 'checkbox',
+      '#title' => t($option['name']) . ' (' . $operation . ')',
+      '#ajax' => array(
+        'callback' => 'rooms_booking_manager_options_change_callback',
+        'wrapper' => 'unit_1_price',
+      ),
+    );
+  }
+
+  // Add final price text if not present
+  $rule = rules_config_load('rooms_booking_manager_deposit');
+  if (!isset($form['new_price']) && !empty($rule) && $rule->active) {
+    $element['new_price'] = array(
+        '#prefix' => '<div class="rooms-search-result__new-price" id="unit_1_price">',
+        '#markup' => $form['price']['#markup'],
+        '#suffix' => '</div>',
+      );
+     $element['new_price']['#markup'] = str_replace('Base price', 'Final price', $element['new_price']['#markup']);
+    // Lets positionate this before actions buttons.
+    $pos = array_search('actions', array_keys($form));
+    $form = array_merge(array_slice($form, 0, $pos), $element, array_slice($form, $pos));
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * FORM_ID = variable_edit_form
+ * Change title and description of some variables.
+ */
+function casa_system_form_variable_edit_form_alter(&$form, &$form_state, $form_id) {
+  // Select your stay variable.
+  $form['rooms_booking_manager_select_your_stay']['#title'] = t('Booking Details and Price');
+  $form['rooms_booking_manager_select_your_stay']['#description'] = t('Change text: Booking Details and Price');
+  // Your current search variable.
+  $form['rooms_booking_manager_your_current_search']['#title'] = t('Dates');
+  $form['rooms_booking_manager_your_current_search']['#description'] = t('Dates');
+}
+
+// Given an option return a string that explains the operation.
+function casa_get_option_operation_label($option) {
+  $label = '';
+  $currency_setting = commerce_currency_load(commerce_default_currency());
+  $currency_symbol = $currency_setting['symbol'];
+  switch ($option['operation']) {
+    case 'add':
+      $label = t('+@amount@currency_symbol to price', array(
+        '@amount' => $option['value'],
+        '@currency_symbol' => $currency_symbol,
+        )
+      );
+      break;
+    case 'add-daily':
+      $label = t('+@amount@currency_symbol per night to price', array(
+        '@amount' => $option['value'],
+        '@currency_symbol' => $currency_symbol,
+        )
+      );
+      break;
+    case 'sub-daily':
+      $label = t('-@amount@currency_symbol per night from price', array(
+        '@amount' => $option['value'],
+        '@currency_symbol' => $currency_symbol,
+        )
+      );
+      break;
+    case 'replace':
+      $label = t('Replace price with @amount@currency_symbol', array(
+        '@amount' => $option['value'],
+        '@currency_symbol' => $currency_symbol,
+        )
+      );
+      break;
+    case 'increase':
+      $label = t('Increase price by @amount%', array(
+        '@amount' => $option['value'],
+        )
+      );
+      break;
+    case 'decrease':
+      $label = t('Decrease price by @amount%', array(
+        '@amount' => $option['value'],
+        )
+      );
+      break;
+    case 'sub':
+      $label = t('-@amount@currency_symbol from price', array(
+        '@amount' => $option['value'],
+        '@currency_symbol' => $currency_symbol,
+        )
+      );
+      break;
+  }
+  return $label;
 }

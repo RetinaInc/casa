@@ -245,6 +245,7 @@ function roomifycasa_enable_features() {
   variable_set('roomify_lingo', 'property_rental');
   $modules = array(
     'rooms_availability_hidden_calendars',
+    'casa_booking_manager',
     'casa_address_footer',
     'casa_image_styles',
     'casa_activity',
@@ -412,6 +413,13 @@ function roomifycasa_finish() {
   // multiple Unit types, but RoomifyCasa only has one Unit Type and doesn't
   // need the description.
   node_type_delete('unit_description');
+
+  // Setting some variables
+  variable_set_value('rooms_booking_manager_select_your_stay', 'Booking Details and Price');
+  variable_set_value('rooms_booking_manager_your_current_search', 'Dates');
+  variable_set_value('rooms_booking_manager_arrival_date', 'Arriving on');
+  variable_set_value('rooms_booking_manager_departure_date', 'Departing on');
+
 
   // Set this variable to show availability of individual units.
   variable_set('rooms_presentation_style', ROOMS_INDIVIDUAL);

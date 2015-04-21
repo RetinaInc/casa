@@ -1,0 +1,153 @@
+
+.rooms-current-search__info,
+.rooms-management-form .rooms-current-search__info {
+  float: left;
+  margin-bottom: 20px;
+}
+.rooms-current-search__info .form-item,
+.rooms-current-search__actions {
+  font-size: 0.9em;
+  clear: both;
+  margin: 0;
+}
+.rooms-current-search__info .fieldset-legend {
+  position: relative;
+  text-transform: none;
+}
+.rooms-current-search__change-search-button {
+  float: left;
+  margin-left: 10em;
+}
+.rooms-current-search__info .form-item label {
+  display: block;
+  float: left;
+  width: 9.5em;
+  text-align: right;
+  margin-right: .5em;
+}
+.rooms-current-search__info .form-type-item .info {
+  display: block;
+  float: left;
+  width: 8em;
+}
+.rooms-search-result__unit-type {
+  clear: both;
+  margin-bottom: 20px;
+}
+.rooms-search-result__unit-type-name {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #ccc;
+}
+.rooms-search-result__booking-form {
+  vertical-align: top;
+}
+.rooms-search-result__booking-form {
+  position: relative;
+  width: 100%;
+}
+.rooms-search-result__booking-form .ajax-progress {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  height: 100%;
+  left: 0;
+}
+.rooms-search-result__unit-type-name {
+  font-weight: bold;
+}
+.rooms-search-result__unit-price {
+  text-align: right;
+}
+.rooms-search-result__unit-base-price label,
+.rooms-search-result__unit-price label {
+  font-weight: bold;
+  display: inline;
+}
+.rooms-search-result__booking-legend,
+.rooms-search-result__select-units {
+  text-align: left;
+  width: 15%;
+}
+.rooms-search-result__select-units .form-item label {
+  display: inline;
+}
+.rooms-search-result__unit-embedded .rooms-search-result__select-guests,
+.rooms-search-result__unit-embedded .rooms-search-result__select-children,
+.rooms-search-result__unit-embedded .rooms-search-result__select-childrenage {
+  float: left;
+  margin-right: 20px;
+}
+.rooms-search-result__unit-embedded .rooms-search-result__actions {
+  float: left;
+  clear: right;
+}
+.rooms-search-result__unit_options .no-unit-fieldset {
+  border: 0px;
+}
+.rooms-search-result__unit_options .no-unit-fieldset .fieldset-legend {
+  display: none;
+}
+.rooms-search-result__unit_options .no-unit-fieldset legend{
+  background:none;
+  border:none;
+}
+.rooms-search-result__unit-type {
+  display: inline-block;
+  width: 50%;
+  margin-left: 10%;
+}
+.rooms-search-result__unit-base-price {
+  margin-top: 1.67em;;
+}
+
+.rooms-current-search__info .fieldset-legend,
+.rooms-search-result__unit-base-price,
+.rooms-search-result__new-price {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: .4em;
+}
+.casa-search-result-addons-label {
+  font-size: 1.1em;
+  font-weight: 300;
+  margin-bottom: .4em;
+}
+
+.rooms-current-search__info .fieldset-wrapper {
+  padding: 20px  
+}
+.casa_search-result-addons {
+  padding-top: 22px;
+  margin-bottom: .4em;
+}
+.rooms-current-search__info .casa_change_search_availability_button {
+  padding-top: 20px;
+}
+.rooms-search-result__unit-embedded .rooms-book-unit-form .form-item {
+  margin-bottom: .4em;
+  padding-left: 20px;
+ 
+}
+.rooms-book-unit-form .rooms-search-result__unit-quantity {
+  display: block;
+  margin-left: 15px;
+}
+.rooms-book-unit-form .rooms-search-result__unit-quantity label,
+.rooms-book-unit-form .rooms-search-result__unit-quantity select {
+  display: inline-block;
+}
+.rooms-search-result__unit-type .rooms-book-unit-form.casa-unit-no-addons {
+  margin-top: 5em;
+}
+.rooms-search-result__unit-type .rooms-book-unit-form.casa-unit-with-addons {
+  margin-top: 0;
+}
+.rooms-search-result__unit-type .rooms-book-unit-form.casa-unit-with-addons .rooms-search-result__new-price {
+  margin-top: 2em;
+}
+.rooms-search-result__unit-base-price .casa-base-price-deposit-removed :nth-child(3),
+.rooms-search-result__unit-base-price .casa-base-price-deposit-removed :nth-child(4) {
+  display: none;
+}

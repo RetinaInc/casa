@@ -475,6 +475,13 @@ a.read-more:hover,
   opacity: 0.9;
   filter: alpha(opacity=90); }
 
+.page-booking .rooms-current-search__info {
+  border: 0px; }
+  .page-booking .rooms-current-search__info label {
+    text-align: left; }
+  .page-booking .rooms-current-search__info .casa_change_search_availability_button {
+    float: right; }
+
 /* sticky-footer */
 html,
 body,
